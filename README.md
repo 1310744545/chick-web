@@ -1,4 +1,4 @@
-# xkx
+# chick-web
 
 ## Project setup
 ```

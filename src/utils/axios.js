@@ -1,22 +1,34 @@
-import axios from 'utils/axios'
+import axios from 'axios'
 import {Message} from 'element-ui'
 import router from '../router'
 
+//请求拦截器
+axios.interceptors.request.use(config=>{
+    //如果请求中存在token,后面请求携带token
+    if (window.sessionStorage.getItem('token')!== null){
+        console.log('进来了')
+        config.headers['Authorization'] = window.sessionStorage.getItem('token');
+    }
+    return config;
+},error => {
+    console.log(error);
+})
 
 //相应拦截器
 axios.interceptors.response.use(success=>{
     //业务逻辑错误
     if (success.status && success.status == 200){
-        if (success.data.status == 404 || success.data.status == 403 || success.data.status == 401 ){
-            Message.error({message:success.data.message});
+        if (success.data.code == 1){
+            Message.error({message:success.data.msg});
         }
-        if (success.data.message){
-            Message.success({message:success.data.message});
+        if (success.data.code == 0){
+            Message.success({message:success.data.msg});
         }
     }
     return success.data;
 }, error => {
-    if (error.response.code == 504 || error.response.code == 504){
+    console.log('这是error.response'+ error.response);
+    if (error.response.code == 504){
         Message.error({message:"服务器被吃了"});
     } else if (error.response.code == 403){
         Message.error({message:"权限不足"});
@@ -35,12 +47,39 @@ axios.interceptors.response.use(success=>{
 });
 
 
+//请求
 let base = '';
-
 //传送json格式的post请求
 export const postRequest = (url, params) =>{
     return axios({
         method:'post',
+        url:`${base}${url}`,
+        data:params
+    })
+};
+
+//传送json格式的get请求
+export const getRequest = (url, params) =>{
+    return axios({
+        method:'get',
+        url:`${base}${url}`,
+        data:params
+    })
+};
+
+//传送json格式的put请求
+export const putRequest = (url, params) =>{
+    return axios({
+        method:'put',
+        url:`${base}${url}`,
+        data:params
+    })
+}
+
+//传送json格式的delete请求
+export const deleteRequest = (url, params) =>{
+    return axios({
+        method:'delete',
         url:`${base}${url}`,
         data:params
     })

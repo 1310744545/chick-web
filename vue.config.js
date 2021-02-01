@@ -4,10 +4,15 @@
 module.exports = {
     devServer: {
         host: 'localhost',
+        port: 80,
         proxy: {
             '/': {
+                ws:false,//websocket
                 target: 'http://localhost:8082',// 要跨域的域名
                 changeOrigin: true, // 是否开启跨域
+                pathRewrite: {     // pathRewrite表示路径重写，key表示一个正则，value表示别名
+                    '^/': '/'   // 即用 '/api'表示'http://localhost:3000/api'
+                }
             }
         }
     }

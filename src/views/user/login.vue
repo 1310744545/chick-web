@@ -1,7 +1,7 @@
 <template>
     <div class="row">
-        <div style="float: left;height: 100px;width: 400px">
-<!--            <img src="">-->
+        <div style="float: left;height: 200px;width: 400px">
+            <img src="../../assets/login.png" style="width: 400px;height: 400px">
         </div>
         <div style="float: left">
             <el-divider direction="vertical"></el-divider>
@@ -10,21 +10,20 @@
             <el-form ref="loginForm" :model="loginForm" class="loginContent" :rules="rules">
                 <H2 class="loginTitle">登录</H2>
                 <el-form-item prop="username">
-                    <el-input type="text" auto-complete="false" v-model="loginForm.username" placeholder="请输入账号" ></el-input>
+                    <el-input type="text" auto-complete="false" v-model="loginForm.username" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" auto-complete="false" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+                    <el-input type="password" auto-complete="false" v-model="loginForm.password" placeholder="请输入密码" show-password prefix-icon="el-icon-lock"></el-input>
                 </el-form-item>
                 <el-form-item prop="code">
-                    <el-input v-model="loginForm.code" placeholder="点击图片更换验证码" style="width: 250px; margin-right: 5px"></el-input><br>
-                    <img :src="captchaUrl" @click="updateCaptcha">
+                    <el-input v-model="loginForm.code" placeholder="点击图片可更换验证码" style="width: 240px;margin-right: 10px" >
+                    </el-input>
+                    <img :src="captchaUrl" @click="updateCaptcha" align="absmiddle">
                 </el-form-item>
-                <div>
-                    <el-checkbox v-model="checked" class="rememberMe">记住我</el-checkbox>
-                    <el-link type="primary" :underline="false" style="float: right;margin-left: 30px">忘记密码?</el-link>
-                    <el-link type="primary" :underline="false" style="float: right">还没有账号?去注册</el-link>
-                    <el-button type="primary" style="width: 100%" @click="formLogin">登录</el-button>
-                </div>
+                <el-checkbox v-model="checked" class="rememberMe">记住我</el-checkbox>
+                <el-link type="primary" :underline="false" style="float: right;margin-left: 30px">忘记密码?</el-link>
+                <el-link type="primary" :underline="false" style="float: right" >没有账号?去注册</el-link>
+                <el-button type="primary" style="width: 100%;margin-bottom: 15px" @click="formLogin">登录</el-button>
 
             </el-form>
         </div>
@@ -62,7 +61,16 @@
             formLogin(){
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        this.postRequest("/user/login",this.loginForm).then(res =>{
+                            console.log(res);
+                            if(res.code === 0){
+                                //存储用户token
+                                var token = res.data.head + res.data.token;
+                                window.sessionStorage.setItem('token', token);
+                                //跳转页面
+                                this.$router.replace('/');
+                            }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -94,19 +102,19 @@
         text-align: center;
     }
     .row{
-        width: 900px;
-        margin: 180px auto;
+        width: 1000px;
+        margin: 140px auto;
     }
     .el-divider--vertical{
-        /*display:inline-block;*/
+        display:inline-block;
         width: 1px;
-        height: 370px;
+        height: 395px;
         margin:0 30px;
-        /*vertical-align:middle;*/
-        /*position:relative;*/
+        vertical-align:middle;
+        position:relative;
     }
     .rememberMe{
         float: left;
-        margin: 0 0 15px 0;
+        margin: 0 0 25px 0;
     }
 </style>

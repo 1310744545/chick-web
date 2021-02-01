@@ -6,6 +6,19 @@ import App from './App';
 import router from './router';
 import ElementUI from 'element-ui';
 import Vuex from 'vuex'
+import axios from 'axios'
+
+import {postRequest} from "./utils/axios";
+import {getRequest} from "./utils/axios";
+import {putRequest} from "./utils/axios";
+import {deleteRequest} from "./utils/axios";
+
+Vue.prototype.postRequest = postRequest;
+Vue.prototype.getRequest = getRequest;
+Vue.prototype.putRequest = putRequest;
+Vue.prototype.deleteRequest = deleteRequest;
+
+Vue.prototype.$axios = axios;
 
 import 'element-ui/lib/theme-chalk/index.css';
 

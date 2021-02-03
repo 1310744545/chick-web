@@ -21,6 +21,7 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.$axios = axios;
 
 import 'element-ui/lib/theme-chalk/index.css';
+import store from './store'
 
 // 关闭浏览器控制台关于环境相关的提示
 Vue.config.productionTip = false;
@@ -30,6 +31,8 @@ Vue.use(Vuex);
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
+
   // store,
   render: h => h(App)
 }).$mount("#app")

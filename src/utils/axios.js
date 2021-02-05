@@ -5,9 +5,8 @@ import router from '../router'
 //请求拦截器
 axios.interceptors.request.use(config=>{
     //如果请求中存在token,后面请求携带token
-    if (window.sessionStorage.getItem('token')!== null){
-        console.log('进来了')
-        config.headers['Authorization'] = window.sessionStorage.getItem('token');
+    if (window.localStorage.getItem('token')!== null){
+        config.headers['Authorization'] = window.localStorage.getItem('token');
     }
     return config;
 },error => {
@@ -18,7 +17,11 @@ axios.interceptors.request.use(config=>{
 axios.interceptors.response.use(success=>{
     //业务逻辑错误
     if (success.status && success.status == 200){
-        if (success.data.code == 1){
+        if (success.data.code == 401){
+            Message.error({message:success.data.msg});
+            router.replace('/login')
+        }
+        if (success.data.code == 1 || success.data.code == 403){
             Message.error({message:success.data.msg});
         }
         if (success.data.code == 0){
@@ -27,7 +30,7 @@ axios.interceptors.response.use(success=>{
     }
     return success.data;
 }, error => {
-    console.log('这是error.response'+ error.response);
+    //这里是备用 400+ 500+ 都在上边处理
     if (error.response.code == 504){
         Message.error({message:"服务器被吃了"});
     } else if (error.response.code == 403){

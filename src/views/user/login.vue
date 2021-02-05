@@ -62,11 +62,10 @@
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
                         this.postRequest("/user/login",this.loginForm).then(res =>{
-                            console.log(res);
                             if(res.code === 0){
                                 //存储用户token
                                 var token = res.data.head + res.data.token;
-                                window.sessionStorage.setItem('token', token);
+                                window.localStorage.setItem('token', token);
                                 //跳转页面
                                 this.$router.replace('/');
                             }
@@ -82,6 +81,9 @@
             }
         },
         watch:{
+        },
+        created:function(){
+          window.localStorage.removeItem("token");
         }
     }
 </script>

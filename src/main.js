@@ -7,6 +7,8 @@ import router from './router';
 import ElementUI from 'element-ui';
 import Vuex from 'vuex'
 import axios from 'axios'
+import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
+
 
 import {postRequest} from "./utils/axios";
 import {getRequest} from "./utils/axios";
@@ -20,7 +22,7 @@ Vue.prototype.deleteRequest = deleteRequest;
 
 Vue.prototype.$axios = axios;
 
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 import store from './store'
 
 // 关闭浏览器控制台关于环境相关的提示

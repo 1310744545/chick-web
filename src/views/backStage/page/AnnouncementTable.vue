@@ -9,6 +9,7 @@
                     <el-option :value='1' label="已删除公告"></el-option>
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-button type="primary" icon="el-icon-plus" @click="add">发布公告</el-button>
             </div>
             <el-table
                 :data="tableData"
@@ -17,10 +18,14 @@
                 header-cell-class-name="table-header"
             >
                 <el-table-column prop="id" label="ID" width="55" align="center" v-if="false"></el-table-column>
-                <el-table-column prop="title" label="公告标题"></el-table-column>
+                <el-table-column prop="title" label="公告标题">
+                    <template slot-scope="scope">
+                        <div v-html="scope.row.title" class="title"></div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="content" label="公告内容" width="400px">
                     <template slot-scope="scope">
-                        <div v-html="scope.row.content" class="content"></div>
+                        <div v-html="scope.row.content" class="content1"></div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="text" label="公告类型">
@@ -30,7 +35,7 @@
 
                 </el-table-column>
                 <el-table-column prop="createBy" label="创建者"></el-table-column>
-                <el-table-column prop="createDate" label="创建时间"></el-table-column>
+                <el-table-column prop="createDate" label="创建时间" width="160px"></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button
@@ -145,7 +150,7 @@ export default {
                 size: this.query.size,
                 delFlag: this.query.delFlag
             }
-            this.postRequest('/announcement/manager/list',data).then(res => {
+            this.getRequest('/announcement/manager/list',data).then(res => {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
             })
@@ -187,8 +192,8 @@ export default {
                 type: this.announcement.type
             }
             this.postRequest("/announcement/manager/edit", data).then(res=>{
-                    this.editVisible = false;
-                    this.getData();
+                this.editVisible = false;
+                this.getData();
             })
         },
         // 分页导航
@@ -213,10 +218,12 @@ export default {
             // render 为 markdown 解析后的结果
             this.html = render;
         },
-        submit(){
-            console.log(this.content);
-            console.log(this.html);
-            this.$message.success('提交成功！');
+        add(){
+            this.announcement.id ='',
+            this.announcement.title ='',
+            this.announcement.content = '',
+            this.announcement.type= ''
+            this.editVisible = true;
         }
     }
 };
@@ -252,7 +259,7 @@ export default {
     height: 40px;
 }
 
-.content{
+.content1,.title{
     display: inline-block;
     white-space: nowrap;
     width: 100%;

@@ -22,7 +22,7 @@
                 </el-form-item>
                 <el-checkbox v-model="checked" class="rememberMe">记住我</el-checkbox>
                 <el-link type="primary" :underline="false" style="float: right;margin-left: 30px">忘记密码?</el-link>
-                <el-link type="primary" :underline="false" style="float: right" >没有账号?去注册</el-link>
+                <el-link type="primary" :underline="false" style="float: right" @click="register">没有账号?去注册</el-link>
                 <el-button type="primary" style="width: 100%;margin-bottom: 15px" @click="formLogin">登录</el-button>
 
             </el-form>
@@ -45,11 +45,11 @@
                 rules: {
                     username: [
                         { required: true, message: '请输入账号', trigger: 'blur' },
-                        { min: 5, max: 10, message: '长度在 5 到 10 个字符', trigger: 'blur' },
+                        { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
                     ],
                     password: [
                         { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 5, max: 10, message: '长度在 6 到 16 个字符', trigger: 'blur' },
+                        { min: 5, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' },
                     ],
                     code : [
                         { required: true, message: '请输入验证码', trigger: 'blur' }
@@ -68,7 +68,7 @@
                         }
                         // console.log(data)
                         this.postRequest("/user/login",data).then(res =>{
-                            console.log(res)
+                            // console.log(res)
                             if(res.code === 0){
                                 //存储用户token
                                 var token = res.data.head + res.data.token;
@@ -85,6 +85,9 @@
             },
             updateCaptcha(){
                 this.captchaUrl = '/user/captcha?time='+ new Date();
+            },
+            register(){
+                this.$router.replace('/user/register');
             }
         },
         watch:{

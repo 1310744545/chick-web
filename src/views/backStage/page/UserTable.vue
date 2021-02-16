@@ -21,26 +21,46 @@
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="userId" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="username" label="账号"></el-table-column>
+                <el-table-column prop="userId" label="ID" width="55" align="center" v-if="false"></el-table-column>
+                <el-table-column  label="账号">
+                    <template slot-scope="scope">
+                        {{ scope.row.username !==null ? scope.row.username:"暂未填写"}}
+                    </template>
+                </el-table-column>
                 <el-table-column label="头像(查看大图)" align="center" width="80">
                     <template slot-scope="scope">
                         <el-image
                             class="table-td-thumb"
-                            :src="scope.row.headPortraitUrl"
+                            :src="scope.row.headPortraitUrl!==null?scope.row.headPortraitUrl:'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'"
                             :preview-src-list="[scope.row.headPortraitUrl]"
                         ></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" label="用户名字"></el-table-column>
-                <el-table-column prop="birthday" label="出生日期"></el-table-column>
-                <el-table-column label="性别" width="55">
+                <el-table-column prop="name" label="用户名字">
                     <template slot-scope="scope">
-                        {{ scope.row.sex === '0' ? '男' : '女' }}
+                        {{ scope.row.name !==null ? scope.row.name:"暂未填写"}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="phone" label="手机" width="108"></el-table-column>
-                <el-table-column prop="email" label="邮箱"></el-table-column>
+                <el-table-column prop="birthday" label="出生日期" width="">
+                    <template slot-scope="scope">
+                        {{ scope.row.birthday !==null ? scope.row.birthday:"暂未填写"}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="性别" >
+                    <template slot-scope="scope">
+                        {{scope.row.sex!==null?scope.row.sex === '0' ? '男' : '女':'暂未填写' }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="phone" label="手机" width="108">
+                    <template slot-scope="scope">
+                        {{ scope.row.phone !==null ? scope.row.phone:"暂未填写"}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="email" label="邮箱">
+                    <template slot-scope="scope">
+                        {{ scope.row.email !==null ? scope.row.email:"暂未填写"}}
+                    </template>
+                </el-table-column>
                 <el-table-column label="锁定与禁用状态" align="center" width="77">
                     <template slot-scope="scope">
                         <el-tag
@@ -54,7 +74,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="createDate" label="注册时间"></el-table-column>
+                <el-table-column prop="createDate" label="注册时间" width="95px"></el-table-column>
                 <el-table-column label="操作" width="200" align="center">
                     <template slot-scope="scope">
                         <el-button

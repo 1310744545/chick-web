@@ -20,7 +20,7 @@ axios.interceptors.response.use(success => {
     if (success.status && success.status === 200) {
         if (success.data.code === 401) {
             Message.error({message: success.data.msg});
-            router.replace('user/login')
+            router.replace('/user/login')
         }
         if (success.data.code === 1 || success.data.code === 403) {
             Message.error({message: success.data.msg});

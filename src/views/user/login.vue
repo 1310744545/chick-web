@@ -61,7 +61,14 @@
             formLogin(){
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        this.postRequest("/user/login",this.loginForm).then(res =>{
+                        const data = {
+                            username: this.loginForm.username,
+                            password: this.loginForm.password,
+                            code: this.loginForm.code,
+                        }
+                        // console.log(data)
+                        this.postRequest("/user/login",data).then(res =>{
+                            console.log(res)
                             if(res.code === 0){
                                 //存储用户token
                                 var token = res.data.head + res.data.token;

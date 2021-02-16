@@ -57,24 +57,29 @@ export default {
             collapse: false,
             items: [
                 {
-                    icon: 'el-icon-lx-home',
+                    icon: 'el-icon-s-home',
                     index: 'dashboard',
                     title: '系统首页'
                 },
                 {
-                    icon: 'el-icon-lx-cascades',
+                    icon: 'el-icon-user-solid',
                     index: 'userTable',
                     title: '用户管理'
                 },
                 {
-                    icon: 'el-icon-lx-copy',
+                    icon: 'el-icon-notebook-1',
                     index: 'writingTable',
                     title: '文章管理'
                 },
                 {
-                    icon: 'el-icon-lx-calendar',
+                    icon: 'el-icon-film',
                     index: 'filmTable',
                     title: '影视管理',
+                },
+                {
+                    icon: 'el-icon-message-solid',
+                    index: 'announcementTable',
+                    title: '公告管理',
                 }
             ]
         };

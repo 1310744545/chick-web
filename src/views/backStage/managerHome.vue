@@ -54,4 +54,5 @@ export default {
 <style scoped>
 @import "../../assets/backStage/color-dark.css";
 @import "../../assets/backStage/main.css";
+
 </style>

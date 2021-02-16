@@ -15,17 +15,19 @@ axios.interceptors.request.use(config => {
 
 //相应拦截器
 axios.interceptors.response.use(success => {
+    console.log(success.data)
     //业务逻辑错误
     if (success.status && success.status === 200) {
         if (success.data.code === 401) {
             Message.error({message: success.data.msg});
-            router.replace('/login')
+            router.replace('user/login')
         }
         if (success.data.code === 1 || success.data.code === 403) {
             Message.error({message: success.data.msg});
         }
         //这里是如果只返回数据,那就不给提示,在后台控制,默认返回R就是不提示,需要提示就加msg
         if (success.data.code === 0 && success.data.msg!=='操作成功') {
+
             Message.success({message: success.data.msg});
         }
     }
@@ -58,7 +60,7 @@ export const postRequest = (url, params) => {
     return axios({
         method: 'post',
         url: `${base}${url}`,
-        data: params
+        params: params
     })
 };
 
@@ -76,7 +78,7 @@ export const putRequest = (url, params) => {
     return axios({
         method: 'put',
         url: `${base}${url}`,
-        data: params
+        params: params
     })
 }
 
@@ -85,6 +87,6 @@ export const deleteRequest = (url, params) => {
     return axios({
         method: 'delete',
         url: `${base}${url}`,
-        data: params
+        params: params
     })
 }

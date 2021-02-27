@@ -29,32 +29,40 @@ const routes = [
             {
                 path: '/',
                 component: () => import('../views/frontStage/page/Home'),
-                meta: { title: '首页' }
+                meta: {title: '首页'}
             },
             {
                 path: '/tools',
                 component: () => import('../views/frontStage/page/Tools'),
-                meta: { title: '在线工具' }
+                meta: {title: '在线工具'},
+                children: [
+                    {
+                        path: '/UUID',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/UUID'),
+                        meta: {title: 'UUID'}
+                    }
+                ]
+
             },
             {
                 path: '/software',
                 component: () => import('../views/frontStage/page/Software'),
-                meta: { title: '软件' }
+                meta: {title: '软件'}
             },
             {
                 path: '/writing',
                 component: () => import('../views/frontStage/page/Writing'),
-                meta: { title: '帖子' }
+                meta: {title: '帖子'}
             },
             {
                 path: '/film',
                 component: () => import('../views/frontStage/page/Film'),
-                meta: { title: '影视' }
+                meta: {title: '影视'}
             },
             {
                 path: '/intro',
                 component: () => import('../views/frontStage/page/Intro'),
-                meta: { title: '简介' }
+                meta: {title: '简介'}
             }
         ]
     },
@@ -66,27 +74,37 @@ const routes = [
             {
                 path: '/dashboard',
                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/backStage/page/Dashboard'),
-                meta: { title: '系统首页' }
+                meta: {title: '系统首页'}
             },
             {
                 path: '/userTable',
                 component: () => import('../views/backStage/page/UserTable'),
-                meta: { title: '用户管理' }
+                meta: {title: '用户管理'}
+            },
+            {
+                path: '/toolsTable',
+                component: () => import('../views/backStage/page/ToolsTable'),
+                meta: {title: '工具管理'}
+            },
+            {
+                path: '/softwareTable',
+                component: () => import('../views/backStage/page/SoftwareTable'),
+                meta: {title: '软件管理'}
             },
             {
                 path: '/writingTable',
                 component: () => import('../views/backStage/page/WritingTable'),
-                meta: { title: '文章管理' }
+                meta: {title: '文章管理'}
             },
             {
                 path: '/filmTable',
                 component: () => import('../views/backStage/page/FilmTable'),
-                meta: { title: '影视管理' }
+                meta: {title: '影视管理'}
             },
             {
                 path: '/announcementTable',
                 component: () => import('../views/backStage/page/AnnouncementTable'),
-                meta: { title: '公告管理' }
+                meta: {title: '公告管理'}
             },
         ]
     },

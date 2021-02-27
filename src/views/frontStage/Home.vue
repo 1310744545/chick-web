@@ -23,7 +23,7 @@
                 <el-menu-item style="float: right;margin-right: 50px" :hidden="loginFlag">
                     <el-button type="primary" @click="login">登录</el-button>
                 </el-menu-item>
-                <el-menu-item @click="logout" style="float: right;margin: 0 30px" :hidden="!loginFlag">退出<i
+                <el-menu-item @click="logout" style="float: right;margin: 0 30px 0 0" :hidden="!loginFlag">退出<i
                     class="el-icon-switch-button"></i></el-menu-item>
                 <el-submenu index="myself" style="float: right" :hidden="!loginFlag">
                     <template slot="title">
@@ -38,6 +38,14 @@
                     <el-menu-item index="enshrine">收藏(未开放)</el-menu-item>
                     <el-menu-item index="history">历史(未开放)</el-menu-item>
                 </el-submenu>
+<!--                <el-submenu style="float: right;" :hidden="!loginFlag">-->
+<!--                    <el-menu-item index="information">个人信息</el-menu-item>-->
+<!--                    <el-menu-item index="write">写帖子</el-menu-item>-->
+<!--                    <el-menu-item index="manageWriting">帖子管理</el-menu-item>-->
+<!--                    <el-menu-item index="setting">设置(未开放)</el-menu-item>-->
+<!--                    <el-menu-item index="enshrine">收藏(未开放)</el-menu-item>-->
+<!--                    <el-menu-item index="history">历史(未开放)</el-menu-item>-->
+<!--                </el-submenu>-->
             </el-menu>
         </el-header>
         <el-main class="main">
@@ -54,7 +62,7 @@
             <!--            </div>-->
         </el-main>
 
-        <el-footer height="150px" style="font-size: 12px;text-align: center;">
+        <el-footer height="150px" style="font-size: 12px;min-width:1431px ">
             <el-divider></el-divider>
             <span><a href="https://github.com/1310744545"><img src="https://github.com/fluidicon.png"
                                                                style="height: 40px;width: 40px;"></a></span><br>
@@ -167,4 +175,10 @@ export default {
     padding: 0;
     min-width: 1431px;
 }
+
+::v-deep .el-icon-arrow-down:before{
+    content: "";
+}
+
+/*el-icon-arrow-down*/
 </style>

@@ -72,6 +72,16 @@ export default {
                     title: '文章管理'
                 },
                 {
+                    icon: 'el-icon-fork-spoon',
+                    index: 'toolsTable',
+                    title: '工具管理'
+                },
+                {
+                    icon: 'el-icon-menu',
+                    index: 'softwareTable',
+                    title: '软件管理'
+                },
+                {
                     icon: 'el-icon-film',
                     index: 'filmTable',
                     title: '影视管理',

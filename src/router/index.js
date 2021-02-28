@@ -40,6 +40,11 @@ const routes = [
                         path: '/UUID',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/UUID'),
                         meta: {title: 'UUID'}
+                    },
+                    {
+                        path: '/randomCipher',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/RandomCipher'),
+                        meta: {title: 'randomCipher'}
                     }
                 ]
 

@@ -23,8 +23,29 @@
                 <el-menu-item style="float: right;margin-right: 50px" :hidden="loginFlag">
                     <el-button type="primary" @click="login">登录</el-button>
                 </el-menu-item>
-                <el-menu-item @click="logout" style="float: right;margin: 0 30px 0 0" :hidden="!loginFlag">退出<i
-                    class="el-icon-switch-button"></i></el-menu-item>
+                <el-menu-item class="logout" @click="logout" style="float: right;margin: 0 30px 0 0"
+                              :hidden="!loginFlag">
+                    退出<i class="el-icon-switch-button"></i>
+                </el-menu-item>
+
+
+                <!--                <el-dropdown style="float: right;padding: 10px 20px 0 0" :hidden="!loginFlag">-->
+                <!--                    <el-col :span="16">-->
+                <!--                        <el-image style="height: 40px;width: 40px" :src="user.headPortraitUrl"></el-image>-->
+                <!--                    </el-col>-->
+                <!--                    <template #dropdown>-->
+                <!--                        <el-dropdown-menu>-->
+
+                <!--                            <el-dropdown-item v-bind:to="/information/">个人信息</el-dropdown-item>-->
+                <!--                            <el-dropdown-item>写帖子</el-dropdown-item>-->
+                <!--                            <el-dropdown-item>帖子管理</el-dropdown-item>-->
+                <!--                            <el-dropdown-item>设置(未开放)</el-dropdown-item>-->
+                <!--                            <el-dropdown-item>收藏(未开放)</el-dropdown-item>-->
+                <!--                            <el-dropdown-item>历史(未开放)</el-dropdown-item>-->
+                <!--                        </el-dropdown-menu>-->
+                <!--                    </template>-->
+                <!--                </el-dropdown>-->
+
                 <el-submenu index="myself" style="float: right" :hidden="!loginFlag">
                     <template slot="title">
                         <el-col :span="16">
@@ -38,14 +59,37 @@
                     <el-menu-item index="enshrine">收藏(未开放)</el-menu-item>
                     <el-menu-item index="history">历史(未开放)</el-menu-item>
                 </el-submenu>
-<!--                <el-submenu style="float: right;" :hidden="!loginFlag">-->
-<!--                    <el-menu-item index="information">个人信息</el-menu-item>-->
-<!--                    <el-menu-item index="write">写帖子</el-menu-item>-->
-<!--                    <el-menu-item index="manageWriting">帖子管理</el-menu-item>-->
-<!--                    <el-menu-item index="setting">设置(未开放)</el-menu-item>-->
-<!--                    <el-menu-item index="enshrine">收藏(未开放)</el-menu-item>-->
-<!--                    <el-menu-item index="history">历史(未开放)</el-menu-item>-->
-<!--                </el-submenu>-->
+
+                <el-dropdown style="float: right;padding: 20px 25px 0 0" :hidden="!loginFlag">
+                    <el-col :span="16">
+                        <el-badge :value="count" class="item">
+                            <i class="el-icon-message" style="font-size: 25px;"></i>
+                        </el-badge>
+                    </el-col>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item>我的消息<el-badge style="padding: 6px 0 0 0" :value="myMessageCount" class="item"></el-badge></el-dropdown-item>
+                            <el-dropdown-item>回复我的<el-badge style="padding: 6px 0 0 0" :value="replyCount" class="item"></el-badge></el-dropdown-item>
+                            <el-dropdown-item>系统通知<el-badge style="padding: 6px 0 0 0" :value="systemCount" class="item"></el-badge></el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+                <!--                <el-submenu index="message" style="float: right;" :hidden="!loginFlag">-->
+                <!--                    <template slot="title">-->
+                <!--                        <el-col :span="16">-->
+                <!--                            <i class="el-icon-message">-->
+                <!--                                <el-badge :value="9" class="item">-->
+                <!--                                    <i class="el-icon-message">-->
+                <!--                                    </i>-->
+                <!--                                </el-badge>-->
+                <!--                            </i>-->
+                <!--                        </el-col>-->
+                <!--                    </template>-->
+                <!--                    <el-menu-item index="myMessage">我的消息</el-menu-item>-->
+                <!--                    <el-menu-item index="reply">回复我的</el-menu-item>-->
+                <!--                    <el-menu-item index="system">系统通知</el-menu-item>-->
+                <!--                </el-submenu>-->
+
             </el-menu>
         </el-header>
         <el-main class="main">
@@ -62,7 +106,7 @@
             <!--            </div>-->
         </el-main>
 
-        <el-footer height="150px" style="font-size: 12px;min-width:1431px ">
+        <el-footer height="150px" style="font-size: 12px;min-width:1431px;">
             <el-divider></el-divider>
             <span><a href="https://github.com/1310744545"><img src="https://github.com/fluidicon.png"
                                                                style="height: 40px;width: 40px;"></a></span><br>
@@ -85,7 +129,11 @@ export default {
             loading: false,
             user: {
                 headPortraitUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-            }
+            },
+            count: 9,
+            myMessageCount:3,
+            replyCount:5,
+            systemCount:1
         }
     },
     methods: {
@@ -110,11 +158,11 @@ export default {
             }
             return isJPG && isLt2M;
         },
-        logout(){
+        logout() {
             this.loginFlag = false;
             window.localStorage.removeItem('token');
         },
-        login(){
+        login() {
             this.$router.replace('/user/login')
         }
     },
@@ -124,8 +172,8 @@ export default {
             this.loginFlag = true;
             this.postRequest('/user/getUserByJwt').then(res => {
                 this.user = res.data;
-                if (this.user.headPortraitUrl===null){
-                    this.user.headPortraitUrl="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
+                if (this.user.headPortraitUrl === null) {
+                    this.user.headPortraitUrl = "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
                 }
             })
         }
@@ -144,8 +192,8 @@ export default {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     color: #2c3e50;
+    text-align: center;
 }
 
 #nav {
@@ -176,9 +224,15 @@ export default {
     min-width: 1431px;
 }
 
-::v-deep .el-icon-arrow-down:before{
-    content: "";
+::v-deep .el-icon-arrow-down:before {
+    content: '';
 }
 
-/*el-icon-arrow-down*/
+::v-deep .el-submenu__title {
+    padding: 0 20px 0 0;
+}
+
+::v-deep .logout {
+    padding: 0 20px 0 0;
+}
 </style>

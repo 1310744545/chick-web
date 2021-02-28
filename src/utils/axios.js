@@ -15,7 +15,7 @@ axios.interceptors.request.use(config => {
 
 //相应拦截器
 axios.interceptors.response.use(success => {
-    console.log(success.data)
+    // console.log(success.data)
     //业务逻辑错误
     if (success.status && success.status === 200) {
         if (success.data.code === 401) {

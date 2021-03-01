@@ -142,11 +142,11 @@ export default {
             this.key = key;
             // this.activeIndex = this.$route.path;
             this.$router.push(key);
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
             this.loading = false;
         },
         beforeAvatarUpload(file) {
-            console.log(file)
+            // console.log(file)
             const isJPG = file.type === 'image/jpeg';
             const isLt2M = file.size / 1024 / 1024 < 2;
 

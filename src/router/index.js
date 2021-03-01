@@ -37,14 +37,28 @@ const routes = [
                 meta: {title: '在线工具'},
                 children: [
                     {
+                        path: '/',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/ToolIndex'),
+                    },
+                    {
                         path: '/UUID',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/UUID'),
-                        meta: {title: 'UUID'}
+                        meta: {title: 'UUID在线生成'}
                     },
                     {
                         path: '/randomCipher',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/RandomCipher'),
-                        meta: {title: 'randomCipher'}
+                        meta: {title: '随机密码生成'}
+                    },
+                    {
+                        path: '/base64',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/Base64'),
+                        meta: {title: 'Base64 编码/解码'}
+                    },
+                    {
+                        path: '/imageBase64',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/ImageBase64'),
+                        meta: {title: '图片与Base64互转'}
                     }
                 ]
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="UUIDContent">
+    <div class="myContent">
         <div class="tip" style="text-align: left">
             随机密码生成
         </div>
@@ -15,7 +15,7 @@
         <div style="padding: 0 0 0 25%">
             <span style="float: left;font-size: 27px;margin: 0 20px 0 0">密码位数:</span>
             <el-slider
-                max="50"
+                :max='max'
                 style="width: 50%;float: left"
                 v-model="numberCount"
                 show-input>
@@ -51,6 +51,7 @@ export default {
             specialCharacter: false,
             rubbishCharacter: true,
             randomList:[],
+            max:50
         }
     },
     methods: {
@@ -73,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.UUIDContent{
+.myContent{
     min-height: 500px;
     height: auto;
     width: 100%;

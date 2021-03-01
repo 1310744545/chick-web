@@ -1,26 +1,26 @@
 <template>
-    <div class="container">
-        <div class="breadcrumb">
-            <div class="breadcrumb-item breadcrumbContainer">
-                <el-breadcrumb separator-class="el-icon-arrow-left">
-                    <transition-group name="breadcrumb">
-                        <el-breadcrumb-item v-for="(item, index) in list" :key="index">
-                            <router-link :to="item.path">{{item.meta.title}}</router-link>
-                        </el-breadcrumb-item>
-                    </transition-group>
-                </el-breadcrumb>
-            </div>
-        </div>
-        <el-divider></el-divider>
-        <div class="toolsContent">
-            <router-view></router-view>
+    <div class="toolsTitle">
+        <el-row :gutter="20">
+            <el-col :span="4" v-for="(item,index) in toolList">
+                <el-button @click="addRouter(item.path)" type="primary" style="width: 100%">{{item.name}}</el-button>
+            </el-col>
+        </el-row>
+        <br>
+        <div class="pagination">
+            <el-pagination
+                layout="total, prev, pager, next"
+                :current-page="query.current"
+                :page-size="query.size"
+                :total="pageTotal"
+                @current-change="handlePageChange"
+            ></el-pagination>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "Tools",
+    name: "ToolIndex",
     data() {
         return {
             query: {
@@ -73,22 +73,4 @@ export default {
 
 <style scoped>
 
-.container{
-    height: auto;
-    width: 90%;
-    margin: 0 auto;
-}
-.breadcrumb{
-    height: 40px;
-}
-.breadcrumbContainer{
-    padding: 25px 0 0 0;
-}
-.toolsContent{
-    height: 100%;
-    min-height: 400px;
-    background-image: url("../../../assets/请先选择工具.png");
-    background-position:center;
-    background-repeat:no-repeat;
-}
 </style>

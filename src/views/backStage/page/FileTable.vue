@@ -8,8 +8,18 @@
                     class="handle-del mr10"
                     @click="delAllSelection"
                 >批量删除</el-button>
-                <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
+                <el-input v-model="query.name" placeholder="文件名" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle;margin-left: 10px"
+                           @change="changeDel">
+                    <el-option :value="0" label="正常文件"></el-option>
+                    <el-option :value='1' label="已删除文件"></el-option>
+                </el-select>
+                <el-select v-model="query.type" class="mr10" style="vertical-align:middle;"
+                           @change="changeType">
+                    <el-option key="all" value="" label="全部"></el-option>
+                    <el-option :key="item.id" :value="item.id" v-for="(item, index) in typeList" :label="item.name"></el-option>
+                </el-select>
             </div>
             <el-table
                 :data="tableData"
@@ -64,8 +74,8 @@
                 <el-pagination
                     background
                     layout="total, prev, pager, next"
-                    :current-page="query.pageIndex"
-                    :page-size="query.pageSize"
+                    :current-page="query.current"
+                    :page-size="query.size"
                     :total="pageTotal"
                     @current-change="handlePageChange"
                 ></el-pagination>
@@ -73,20 +83,20 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="用户名">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="form.address"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
-        </el-dialog>
+<!--        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">-->
+<!--            <el-form ref="form" :model="form" label-width="70px">-->
+<!--                <el-form-item label="用户名">-->
+<!--                    <el-input v-model="form.name"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="地址">-->
+<!--                    <el-input v-model="form.address"></el-input>-->
+<!--                </el-form-item>-->
+<!--            </el-form>-->
+<!--            <span slot="footer" class="dialog-footer">-->
+<!--                <el-button @click="editVisible = false">取 消</el-button>-->
+<!--                <el-button type="primary" @click="saveEdit">确 定</el-button>-->
+<!--            </span>-->
+<!--        </el-dialog>-->
     </div>
 </template>
 
@@ -95,33 +105,59 @@ export default {
     name: 'filmTable',
     data() {
         return {
+            typeList:[],
             query: {
-                address: '',
-                name: '',
-                pageIndex: 1,
-                pageSize: 10
+                current: 1,
+                size: 5,
+                keyword: '',
+                type: '',
+                delFlag: 0
             },
             tableData: [],
-            multipleSelection: [],
-            delList: [],
-            editVisible: false,
-            pageTotal: 0,
-            form: {},
-            idx: -1,
-            id: -1
+            pageTotal: 1,
+            loading: false
         };
     },
     created() {
         this.getData();
+        this.getType();
     },
     methods: {
         // 获取 easy-mock 的模拟数据
         getData() {
-            // fetchData(this.query).then(res => {
-            //     console.log(res);
-            //     this.tableData = res.list;
-            //     this.pageTotal = res.pageTotal || 50;
-            // });
+            const data = {
+                keyword: this.query.keyword,
+                current: this.query.current,
+                size: this.query.size,
+                type: this.query.type,
+                delFlag: this.query.delFlag
+            }
+            this.getRequest('/chick/File/list', data).then(res => {
+                this.tableData = res.data.records;
+                this.pageTotal = res.data.total;
+                // console.log(res.data.records);
+                // console.log(res);
+            })
+        },
+        getType(){
+            const data = {
+                zdName:'文件类型'
+            }
+            this.getRequest('/chick/sysZd/getZdxByZdName', data).then(res => {
+                // console.log(res.data.records);
+                this.typeList = res.data;
+                console.log(res.data);
+            })
+        },
+        changeType(value){
+            console.log(value);
+            this.query.type = value;
+            this.getData();
+        },
+        changeDel(value){
+            console.log(value);
+            this.query.delFlag = value;
+            this.getData()
         },
         // 触发搜索按钮
         handleSearch() {

@@ -87,7 +87,7 @@ export default {
 .toolsContent{
     height: 100%;
     min-height: 400px;
-    background-image: url("../../../assets/请先选择工具.png");
+    /*background-image: url("../../../assets/请先选择工具.png");*/
     background-position:center;
     background-repeat:no-repeat;
 }

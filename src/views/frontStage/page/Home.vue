@@ -9,7 +9,7 @@
                 <div class="block" style="padding: 20px 40px 20px 60px;">
                     <el-carousel height="360px">
                         <el-carousel-item v-for="(u,index) in url" :key="index" interval="3000">
-                            <router-link :to="u.index">
+                            <router-link :to="u.index" >
                                 <el-image :src="u.url" style="height: 100%;width: 714px"></el-image>
                             </router-link>
                         </el-carousel-item>

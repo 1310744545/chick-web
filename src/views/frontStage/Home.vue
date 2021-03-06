@@ -108,7 +108,7 @@
 
         <el-footer height="150px" style="font-size: 12px;min-width:1431px;">
             <el-divider></el-divider>
-            <span><a href="https://github.com/1310744545"><img src="https://github.com/fluidicon.png"
+            <span><a href="https://github.com/1310744545"><img :src="footLogo"
                                                                style="height: 40px;width: 40px;"></a></span><br>
             <span>Copyright @2021 1310744545</span><br>
             <span><a href="http://beian.miit.gov.cn/" style="text-decoration: none;">黑ICP备20000673号-1</a></span>
@@ -121,8 +121,9 @@ export default {
     name: "Home",
     data() {
         return {
-            activeIndex: '/',
+            activeIndex: this.$route.path,
             homeLogo: require('@/assets/home.jpg'),
+            footLogo: require('@/assets/icon.jpg'),
             loginFlag: false,
             input: '',
             key: '/',
@@ -176,6 +177,11 @@ export default {
                     this.user.headPortraitUrl = "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
                 }
             })
+        }
+    },
+    watch:{
+        '$route' (to, from){
+            this.activeIndex = to.path
         }
     }
 }

@@ -82,6 +82,11 @@ export default {
                     title: '软件管理'
                 },
                 {
+                    icon: 'el-icon-s-grid',
+                    index: 'fileTable',
+                    title: '文件管理'
+                },
+                {
                     icon: 'el-icon-film',
                     index: 'filmTable',
                     title: '影视管理',

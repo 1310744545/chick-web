@@ -1,7 +1,7 @@
 <template>
     <div class="toolsTitle">
-        <el-row :gutter="20">
-            <el-col :span="4" v-for="(item,index) in toolList">
+        <el-row :gutter="60" style="width: 90%;margin: 0 auto">
+            <el-col :span="6" v-for="(item,index) in toolList" style="text-align:center">
                 <el-button @click="addRouter(item.path)" type="primary" style="width: 100%">{{item.name}}</el-button>
             </el-col>
         </el-row>
@@ -72,5 +72,7 @@ export default {
 </script>
 
 <style scoped>
-
+.toolsTitle{
+    text-align: center;
+}
 </style>

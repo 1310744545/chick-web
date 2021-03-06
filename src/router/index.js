@@ -121,6 +121,11 @@ const routes = [
                 meta: {title: '影视管理'}
             },
             {
+                path: '/fileTable',
+                component: () => import('../views/backStage/page/FileTable'),
+                meta: {title: '文件管理'}
+            },
+            {
                 path: '/announcementTable',
                 component: () => import('../views/backStage/page/AnnouncementTable'),
                 meta: {title: '公告管理'}

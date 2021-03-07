@@ -181,7 +181,9 @@ export default {
     },
     watch:{
         '$route' (to, from){
-            this.activeIndex = to.path
+            console.log(to)
+            console.log(from)
+            this.activeIndex = to.matched[1].path
         }
     }
 }

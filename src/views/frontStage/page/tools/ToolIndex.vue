@@ -1,8 +1,11 @@
 <template>
     <div class="toolsTitle">
-        <el-row :gutter="60" style="width: 90%;margin: 0 auto">
-            <el-col :span="6" v-for="(item,index) in toolList" style="text-align:center">
-                <el-button @click="addRouter(item.path)" type="primary" style="width: 100%">{{item.name}}</el-button>
+        <el-row :gutter="40" style="width: 90%;margin: 0 auto">
+            <el-col :span="6" v-for="(item,index) in toolList" style="text-align:center;margin-bottom: 30px">
+                <router-link :to="item.path">
+                    <el-image :src="item.imgUrl" style="width: 220px;height: 220px"></el-image>
+                </router-link>
+                <el-button @click="addRouter(item.path)" type="primary" style="width: 100%">{{ item.name }}</el-button>
             </el-col>
         </el-row>
         <br>
@@ -36,7 +39,7 @@ export default {
     },
     methods: {
         getData() {
-            this.loading=true;
+            this.loading = true;
             const data = {
                 keyword: this.query.keyword,
                 current: this.query.current,
@@ -48,14 +51,14 @@ export default {
                 this.pageTotal = res.data.total;
                 // console.log(this.toolList);
             })
-            this.loading=false;
+            this.loading = false;
         },
         handlePageChange(val) {
             this.$set(this.query, 'current', val);
             // target.scrollIntoView();
             this.getData();
         },
-        addRouter(path){
+        addRouter(path) {
             this.$router.push(path);
         }
     },
@@ -72,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-.toolsTitle{
+.toolsTitle {
     text-align: center;
 }
 </style>

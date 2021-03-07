@@ -66,7 +66,7 @@
         </div>
 
         <!--编辑弹出框-->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="80%">
+        <el-dialog title="发布公告" :visible.sync="editVisible" width="80%">
             <el-form ref="form" :model="form" label-width="70px">
                 <div style="width: auto;margin: 0 auto">
                     <el-input class="handle-input mr10" v-model="announcement.id" v-if="false"></el-input>

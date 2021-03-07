@@ -47,13 +47,17 @@
             <el-image style="width: auto; height: auto" :src="url2"></el-image>
             <div style="width:1357px;height: 280px">
                 <div class="level2-1">
-                    <el-card class="box-card" shadow="hover">
+                    <el-card class="box-card" shadow="hover" v-loading="toolsLoading">
                         <div slot="header" class="clearfix">
                             <span>在线工具</span>
-                            <el-button style="float: right; padding: 3px 0" type="text">查看详情</el-button>
+                            <el-button style="float: right; padding: 3px 0" type="text" @click="addRouter('/tools')">查看详情</el-button>
                         </div>
-                        <div v-for="(o, index) in 4" :key="index" class="text item">
-                            {{ '列表内容 ' + o }}
+                        <div v-for="(o, index) in toolsList" :key="index" class="text item">
+                            <router-link :to="o.path" style="color: #20a0ff">{{ o.name }}</router-link>
+                            <span
+                                style="float: right;display: inline-block;white-space: nowrap;width: 76px;overflow: hidden;">{{
+                                    o.createDate
+                                }}撑开</span>
                         </div>
                     </el-card>
                 </div>
@@ -135,7 +139,9 @@ export default {
             url2: 'http://chickweb.oss-cn-beijing.aliyuncs.com/files/%E4%BE%BF%E6%8D%B7.png',
             url3: 'http://chickweb.oss-cn-beijing.aliyuncs.com/files/%E5%A8%B1%E4%B9%90.png',
             announcement: [],
-            announcementLoading: false
+            toolsList:[],
+            announcementLoading: false,
+            toolsLoading:false
         }
     },
     methods: {
@@ -152,11 +158,28 @@ export default {
                 this.announcementLoading = false;
                 // console.log(res);
             })
+        },
+        getTools(){
+            this.toolsLoading = true;
+            const data = {
+                keyword: this.query.keyword,
+                current: this.query.current,
+                size: 4,
+                delFlag: this.query.delFlag
+            }
+            this.getRequest("/chick/tools/list", data).then(res => {
+                this.toolsList = res.data.records;
+                this.toolsLoading = false;
+                console.log(res);
+            })
+        },
+        addRouter(path) {
+            this.$router.push(path);
         }
     },
     created() {
         this.getAnnouncement();
-
+        this.getTools();
     }
 }
 </script>

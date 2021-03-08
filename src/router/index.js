@@ -59,6 +59,16 @@ const routes = [
                         path: '/imageBase64',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/ImageBase64'),
                         meta: {title: '图片与Base64互转'}
+                    },
+                    {
+                        path: '/createQRCode',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/createQRCode'),
+                        meta: {title: '生成二维码'}
+                    },
+                    {
+                        path: '/distinguishQRCode',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/distinguishQRCode'),
+                        meta: {title: '识别二维码'}
                     }
                 ]
 

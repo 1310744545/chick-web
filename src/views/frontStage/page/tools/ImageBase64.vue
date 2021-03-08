@@ -23,7 +23,7 @@
                         </div>
                     </template>
                 </el-upload>
-                <el-image v-if="flag" :src="base64" style="width: 100%;height: 100%"></el-image>
+                <el-image v-if="flag" :src="base64" style="max-height: 400px;max-width: 500px"></el-image>
             </div>
             <div style="margin: 20px 0;">
                 <el-button @click="imgToBase64" type="primary" class="el-icon-bottom">图片转Base64</el-button>

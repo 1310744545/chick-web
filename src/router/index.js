@@ -69,6 +69,16 @@ const routes = [
                         path: '/distinguishQRCode',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/distinguishQRCode'),
                         meta: {title: '识别二维码'}
+                    },
+                    {
+                        path: '/hexConvert',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/HexConvert'),
+                            meta: {title: '常用/任意进制转换'}
+                    },
+                    {
+                        path: '/timeStamp',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/TimeStamp'),
+                        meta: {title: '时间戳转换'}
                     }
                 ]
 

@@ -28,7 +28,7 @@ export default {
         return {
             query: {
                 current: 1,
-                size: 6,
+                size: 8,
                 keyword: '',
                 delFlag: 0
             },

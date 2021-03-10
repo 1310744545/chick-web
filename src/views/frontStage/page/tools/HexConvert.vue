@@ -58,7 +58,8 @@ export default {
             }, {
                 hex: '64',
                 result: ''
-            },]
+            },],
+            messageFlag:true
         }
     },
     methods: {
@@ -80,6 +81,7 @@ export default {
             // this.getRequest('/chick/tools/commonHexConvert', {hex: this.hex,inputContent:this.inputContent}).then(res => {
             //     // this.UUIDList = res.data;
             // })
+            this.messageFlag=true;
         },
         v10toX(n, m) {
             m = String(m).replace(/ /gi, "");
@@ -89,12 +91,14 @@ export default {
             var a = this.ss.substr(0, 10);
             var b = a + ".";
             if (eval("m.replace(/[" + b + "]/gi,'')") != "") {
-                this.M("请输入有效的10进制数值");
+                this.M("请输入有效的"+ n +"进制数值");
+                this.messageFlag = false;
                 return ""
             }
             m = m.split(".");
             if (m.length > 2) {
-                this.M("请输入有效的10进制数值");
+                this.M("请输入有效的"+ n +"进制数值");
+                this.messageFlag = false;
                 return ""
             }
             var a = this.ss.substr(0, n);
@@ -139,11 +143,13 @@ export default {
             var b = a + ".";
             if (eval("m.replace(/[" + b + "]/gi,'')") != "") {
                 this.M("请输入有效的" + n + "进制数值");
+                this.messageFlag = false;
                 return ""
             }
             m = m.split(".");
             if (m.length > 2) {
                 this.M("请输入有效的" + n + "进制数值");
+                this.messageFlag = false;
                 return ""
             }
             if (m.length == 1) {
@@ -182,7 +188,9 @@ export default {
             return a
         },
         M(b) {
-            Message.error(b);
+            if (this.messageFlag){
+                Message.error(b);
+            }
         },
         convert(n,m,mn) {
             return this.vXtoY(mn, m, n)

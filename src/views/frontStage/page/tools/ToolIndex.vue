@@ -1,7 +1,7 @@
 <template>
     <div class="toolsTitle">
         <el-row :gutter="40" style="width: 90%;margin: 0 auto">
-            <el-col :span="6" v-for="(item,index) in toolList" style="text-align:center;margin-bottom: 30px">
+            <el-col :span="6" v-for="(item,index) in toolList" v-bind:key="index" style="text-align:center;margin-bottom: 30px">
                 <router-link :to="item.path">
                     <el-image :src="item.imgUrl" style="width: 220px;height: 220px"></el-image>
                 </router-link>

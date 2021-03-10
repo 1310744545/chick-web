@@ -8,7 +8,7 @@ import ElementUI from 'element-ui';
 import Vuex from 'vuex'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
-
+import 'lib-flexible/flexible.js'//自适应
 
 import {postRequest} from "./utils/axios";
 import {getRequest} from "./utils/axios";

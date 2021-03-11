@@ -27,7 +27,42 @@
                 <el-table-column prop="result" label="结果"></el-table-column>
             </el-table>
         </div>
+        <div>
+            <div class="tip2" style="margin: 50px 0 50px 0">
+                任意进制转换
+            </div>
+            <div>
+                <el-select v-model="hexFrom" style="vertical-align:middle;">
+                    <el-option
+                        v-for="item in options"
+                        :key="item"
+                        :label="item+'进制'"
+                        :value="item">
+                    </el-option>
+                </el-select>
+                <el-input v-model="valueFrom" placeholder="请输入内容" style="width: 250px;vertical-align:middle;margin: 0 0 0 30px;"></el-input>
+            </div>
+           <i class="el-icon-bottom" style="font-size: 50px;margin: 0 100px"></i>
+           <i class="el-icon-bottom" style="font-size: 50px;margin: 0 100px"></i>
+            <div style="margin: 10px 0 0 0">
+                <el-select v-model="hexTo" style="vertical-align:middle;">
+                <el-option
+                    v-for="item in options"
+                    :key="item"
+                    :label="item+'进制'"
+                    :value="item">
+                </el-option>
+                </el-select>
+                <el-input v-model="valueTo" placeholder="这里显示转换后的内容" style="width: 250px;vertical-align:middle;margin: 0 0 0 30px;" readonly="true"></el-input>
+            </div>
+
+            <br>
+            <el-button @click="fromHexTo" type="primary" round style="width: 100px">转换</el-button>
+        </div>
+
     </div>
+
+
 </template>
 
 <script>
@@ -39,7 +74,7 @@ export default {
         return {
             hex: 2,
             inputContent: '',
-            ss : '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_/',
+            ss: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_/',
             tableData: [{
                 hex: '2',
                 result: ''
@@ -59,19 +94,26 @@ export default {
                 hex: '64',
                 result: ''
             },],
-            messageFlag:true
+            messageFlag: true,
+            options:[
+                2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,
+                        33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],
+            hexFrom:2,
+            hexTo:2,
+            valueFrom:'',
+            valueTo:''
         }
     },
     methods: {
         generate() {
             var mn = this.hex;
             var m = this.inputContent;
-            this.tableData[0].result=this.convert(2, m, mn)
-            this.tableData[1].result=this.convert(8, m, mn)
-            this.tableData[2].result=this.convert(10, m, mn)
-            this.tableData[3].result=this.convert(16, m, mn)
-            this.tableData[4].result=this.convert(32, m, mn)
-            this.tableData[5].result=this.convert(64, m, mn)
+            this.tableData[0].result = this.convert(2, m, mn)
+            this.tableData[1].result = this.convert(8, m, mn)
+            this.tableData[2].result = this.convert(10, m, mn)
+            this.tableData[3].result = this.convert(16, m, mn)
+            this.tableData[4].result = this.convert(32, m, mn)
+            this.tableData[5].result = this.convert(64, m, mn)
             // $("#base_2").val();
             // $("#base_8").val(convert(8, m, mn));
             // $("#base_10").val(convert(10, m, mn));
@@ -81,7 +123,7 @@ export default {
             // this.getRequest('/chick/tools/commonHexConvert', {hex: this.hex,inputContent:this.inputContent}).then(res => {
             //     // this.UUIDList = res.data;
             // })
-            this.messageFlag=true;
+            this.messageFlag = true;
         },
         v10toX(n, m) {
             m = String(m).replace(/ /gi, "");
@@ -91,13 +133,13 @@ export default {
             var a = this.ss.substr(0, 10);
             var b = a + ".";
             if (eval("m.replace(/[" + b + "]/gi,'')") != "") {
-                this.M("请输入有效的"+ n +"进制数值");
+                this.M("请输入有效的" + n + "进制数值");
                 this.messageFlag = false;
                 return ""
             }
             m = m.split(".");
             if (m.length > 2) {
-                this.M("请输入有效的"+ n +"进制数值");
+                this.M("请输入有效的" + n + "进制数值");
                 this.messageFlag = false;
                 return ""
             }
@@ -188,12 +230,15 @@ export default {
             return a
         },
         M(b) {
-            if (this.messageFlag){
+            if (this.messageFlag) {
                 Message.error(b);
             }
         },
-        convert(n,m,mn) {
+        convert(n, m, mn) {
             return this.vXtoY(mn, m, n)
+        },
+        fromHexTo() {
+            this.valueTo=this.convert(this.hexTo, this.valueFrom, this.hexFrom);
         }
     }
 }

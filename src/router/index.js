@@ -79,6 +79,16 @@ const routes = [
                         path: '/timeStamp',
                         component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/TimeStamp'),
                         meta: {title: '时间戳转换'}
+                    },
+                    {
+                        path: '/jsCompress',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/JSCompress'),
+                        meta: {title: 'JS压缩'}
+                    },
+                    {
+                        path: '/cssCompress',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/tools/CSSCompress'),
+                        meta: {title: 'CSS压缩'}
                     }
                 ]
 

@@ -5,7 +5,7 @@
                 <router-link :to="item.path">
                     <el-image :src="item.imgUrl" style="width: 220px;height: 220px"></el-image>
                 </router-link>
-                <el-button @click="addRouter(item.path)" type="primary" style="width: 100%">{{ item.name }}</el-button>
+                <el-button @click="addRouter(item.path)" type="primary" style="width: 100%" round>{{ item.name }}</el-button>
             </el-col>
         </el-row>
         <br>

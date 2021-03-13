@@ -75,7 +75,6 @@ export default {
             return this.dateFormat(da, fmt);
         },
         dateFormat(dateObj, fmt) {
-            var minfmt = "";
             try {
                 if (fmt == null) {
                     fmt = "yyyy-MM-dd hh:mm:ss";

@@ -55,6 +55,7 @@ export default {
     },
     methods: {
         onBeforeUploadImage(file){
+
             // var reader = new FileReader()
             // reader.readAsDataURL(file);
             // reader.onload = () => {

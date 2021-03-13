@@ -33,7 +33,7 @@
         <el-button @click="generate" type="primary">生成</el-button>
 
         <div v-for="(item, index) in randomList" :key="index" style="margin: 10px 0 0 0">
-            <span>{{item}}</span>
+            <span style="font-size: 25px">{{item}}</span>
         </div>
     </div>
 </template>

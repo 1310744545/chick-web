@@ -7,10 +7,9 @@
             <span style="font-size: 27px;margin: 0 20px 0 0;vertical-align:top">二维码内容:</span>
             <el-input
                 type="textarea"
-                :rows="2"
+                :rows="4"
                 placeholder="请输入生成内容"
                 v-model="textarea"
-                rows="4"
                 style="width: 60%;padding-bottom: 20px"
             >
             </el-input>
@@ -44,9 +43,6 @@
 </template>
 
 <script>
-import {Message} from 'element-ui'
-import axios from 'axios'
-
 export default {
     name: "UUID",
     data() {

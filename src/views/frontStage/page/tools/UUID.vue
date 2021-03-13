@@ -14,7 +14,7 @@
         <br><br><br>
         <el-button @click="generate" type="primary">生成</el-button>
 
-        <div v-for="(item, index) in UUIDList" :key="index" style="margin: 10px 0 0 0">
+        <div v-for="(item, index) in UUIDList" :key="index" style="margin: 10px 0 0 0;font-size: 25px">
             <span>{{item}}</span>
         </div>
     </div>

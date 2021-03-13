@@ -9,7 +9,7 @@
                     @click="delAllSelection"
                 >批量删除
                 </el-button>
-                <el-input v-model="query.name" placeholder="文件名" class="handle-input mr10"></el-input>
+                <el-input v-model="query.keyword" placeholder="文件名" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle;margin-left: 10px"
                            @change="changeDel">
@@ -149,6 +149,9 @@ export default {
         };
     },
     created() {
+        if (sessionStorage.getItem('fileCurrent')!=null){
+            this.query.current = parseInt(sessionStorage.getItem('fileCurrent'));
+        }
         this.getData();
         this.getType();
     },
@@ -162,18 +165,20 @@ export default {
                 type: this.query.type,
                 delFlag: this.query.delFlag
             }
-            this.getRequest('/chick/File/list', data).then(res => {
+            this.postRequest('/chick/File/list', data).then(res => {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
+                sessionStorage.setItem('fileCurrent',this.query.current);
+
                 // console.log(res.data.records);
-                console.log(res);
+                // console.log(res);
             })
         },
         getType() {
             const data = {
                 zdName: '文件类型'
             }
-            this.getRequest('/chick/sysZd/getZdxByZdName', data).then(res => {
+            this.postRequest('/chick/sysZd/getZdxByZdName', data).then(res => {
                 // console.log(res.data.records);
                 this.typeList = res.data;
                 // console.log(res.data);
@@ -191,7 +196,8 @@ export default {
         },
         // 触发搜索按钮
         handleSearch() {
-            this.$set(this.query, 'pageIndex', 1);
+            sessionStorage.setItem('fileCurrent',1);
+            this.query.current=1;
             this.getData();
         },
         add() {
@@ -246,7 +252,9 @@ export default {
                         fileId: row.id,
                         delFlag: row.delFlag
                     }
-                    this.postRequest("/chick/File/deleteOrRenew", data).then(this.getData());
+                    this.postRequest("/chick/File/deleteOrRenew", data).then(res=>{
+                        this.getData()
+                    });
                 })
                 .catch(() => {
                 });

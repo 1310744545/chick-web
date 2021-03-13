@@ -18,7 +18,7 @@
             >
                 <el-table-column label="序号" width="55" align="center">
                     <template slot-scope="scope">
-                        {{ scope.$index + 1 }}
+                        {{ scope.$index + 1+((query.current-1)*query.size) }}
                     </template>
                 </el-table-column>
                 <el-table-column prop="userId" label="ID" width="55" align="center" v-if="false"></el-table-column>
@@ -155,6 +155,9 @@ export default {
         };
     },
     created() {
+        if (sessionStorage.getItem('userCurrent')!=null){
+            this.query.current = parseInt(sessionStorage.getItem('userCurrent'));
+        }
         this.getData();
     },
     methods: {
@@ -171,9 +174,10 @@ export default {
                 size: this.query.size,
                 delFlag: this.query.delFlag
             }
-            this.getRequest('/user/manager/list', data).then(res => {
+            this.postRequest('/user/manager/list', data).then(res => {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
+                sessionStorage.setItem('userCurrent',this.query.current);
                 // console.log(res.data.records);
                 // console.log(res);
             })
@@ -181,7 +185,8 @@ export default {
         },
         // 触发搜索按钮
         handleSearch() {
-            this.$set(this.query, 'pageIndex', 1);
+            sessionStorage.setItem('userCurrent',1);
+            this.query.current=1;
             this.getData();
         },
         // 删除操作

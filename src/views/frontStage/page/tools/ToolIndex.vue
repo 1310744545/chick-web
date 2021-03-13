@@ -49,6 +49,7 @@ export default {
             this.getRequest('/chick/tools/list', data).then(res => {
                 this.toolList = res.data.records;
                 this.pageTotal = res.data.total;
+                sessionStorage.setItem('toolCurrent',this.query.current);
                 // console.log(this.toolList);
             })
             this.loading = false;
@@ -63,10 +64,12 @@ export default {
         }
     },
     created() {
+        if (sessionStorage.getItem('toolCurrent')!=null){
+            this.query.current = parseInt(sessionStorage.getItem('toolCurrent'));
+        }
         this.getData();
     },
     computed: {
-
         list() {
             return this.$route.matched;
         }

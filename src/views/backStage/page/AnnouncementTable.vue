@@ -136,6 +136,9 @@ export default {
         quillEditor
     },
     created() {
+        if (sessionStorage.getItem('announcementCurrent')!=null){
+            this.query.current = parseInt(sessionStorage.getItem('announcementCurrent'));
+        }
         this.getData();
     },
     methods: {
@@ -150,9 +153,10 @@ export default {
                 size: this.query.size,
                 delFlag: this.query.delFlag
             }
-            this.getRequest('/announcement/manager/list',data).then(res => {
+            this.postRequest('/announcement/manager/list',data).then(res => {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
+                sessionStorage.setItem('announcementCurrent',this.query.current);
             })
         },
         // 触发搜索按钮

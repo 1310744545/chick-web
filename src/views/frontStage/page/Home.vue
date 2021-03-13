@@ -153,7 +153,7 @@ export default {
                 size: 6,
                 delFlag: this.query.delFlag
             }
-            this.getRequest("/announcement/manager/list", data).then(res => {
+            this.getRequest("/announcement/manager/indexList", data).then(res => {
                 this.announcement = res.data.records;
                 this.announcementLoading = false;
                 // console.log(res);
@@ -167,7 +167,7 @@ export default {
                 size: 4,
                 delFlag: this.query.delFlag
             }
-            this.getRequest("/chick/tools/list", data).then(res => {
+            this.getRequest("/get/list", data).then(res => {
                 this.toolsList = res.data.records;
                 this.toolsLoading = false;
                 console.log(res);

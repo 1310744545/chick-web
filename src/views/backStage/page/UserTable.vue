@@ -2,13 +2,13 @@
     <div>
         <div class="container">
             <div class="handle-box">
-                <el-input v-model="query.keyword" placeholder="请输入要查询的内容" class="handle-input mr10"></el-input>
-                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle"
+                <el-input v-model="query.keyword" placeholder="请输入要查询的内容" class="handle-input mr10" style="vertical-align:top"></el-input>
+                <el-select v-model="query.delFlag" class="mr10"  style="vertical-align:top"
                            @change="getData('selectchange')">
                     <el-option :value="0" label="正常用户"></el-option>
                     <el-option :value='1' label="已删除用户"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-button type="primary" icon="el-icon-search" @click="handleSearch" >搜索</el-button>
             </div>
             <el-table
                 v-loading="loading"

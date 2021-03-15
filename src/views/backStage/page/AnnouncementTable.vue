@@ -3,7 +3,7 @@
         <div class="container">
             <div class="handle-box">
                 <el-input v-model="query.keyword" placeholder="请输入标题" class="handle-input mr10"></el-input>
-                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle"
+                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:top"
                            @change="getData('selectchange')">
                     <el-option :value="0" label="正常公告"></el-option>
                     <el-option :value='1' label="已删除公告"></el-option>

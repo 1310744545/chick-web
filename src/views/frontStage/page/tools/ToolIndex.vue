@@ -46,7 +46,7 @@ export default {
                 size: this.query.size,
                 delFlag: this.query.delFlag
             }
-            this.getRequest('/chick/tools/list', data).then(res => {
+            this.getRequest('/get/toolList', data).then(res => {
                 this.toolList = res.data.records;
                 this.pageTotal = res.data.total;
                 sessionStorage.setItem('toolCurrent',this.query.current);

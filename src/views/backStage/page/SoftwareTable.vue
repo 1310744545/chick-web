@@ -4,7 +4,7 @@
             <div class="handle-box">
                 <el-input v-model="query.name" placeholder="文件名" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle;margin-left: 10px"
+                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:top;margin-left: 10px"
                            @change="changeDel">
                     <el-option :value="0" label="正常软件"></el-option>
                     <el-option :value='1' label="已删除软件"></el-option>
@@ -21,12 +21,19 @@
             >
                 <el-table-column prop="id" label="ID" width="55" align="center" v-if="false"></el-table-column>
                 <el-table-column prop="name" label="文件名"></el-table-column>
-                <el-table-column prop="url" label="地址" width="300px"></el-table-column>
-                <el-table-column prop="typeName" label="文件类型"></el-table-column>
+                <el-table-column prop="company" label="开发商"></el-table-column>
+                <el-table-column prop="description" label="描述"></el-table-column>
                 <el-table-column prop="createDate" label="上传时间"></el-table-column>
-                <el-table-column prop="createName" label="上传人"></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
+                        <el-button
+                            type="text"
+                            icon="el-icon-edit"
+                            class="success"
+                            @click="handleDelete(scope.$index, scope.row)"
+                            v-if="scope.row.delFlag === '0'"
+                        >编辑
+                        </el-button>
                         <el-button
                             type="text"
                             icon="el-icon-delete"
@@ -50,37 +57,23 @@
         </div>
 
         <!-- 添加文件 -->
-        <el-dialog title="添加文件" :visible.sync="editVisible" width="400px">
+        <el-dialog title="添加文件" :visible.sync="editVisible" width="580px">
             <el-form ref="form" :model="form" label-width="80px" >
-                <el-form-item label="文件类型" class="required" required>
-                    <el-select v-model="upLoadData.addType">
-                        <el-option :key="item.id" :value="item.id" v-for="(item, index) in typeList"
-                                   :label="item.name"></el-option>
-                    </el-select>
+                <el-input v-if="false" v-model="addData.id"></el-input>
+                <el-form-item label="软件名" class="required" required style="width: 500px">
+                    <el-input v-model="addData.name">
+                    </el-input>
                 </el-form-item>
-                <el-upload
-                    class="upload-demo"
-                    drag
-                    :data="upLoadData"
-                    action=""
-                    :limit= 1
-                    :file-list="fileList"
-                    :before-upload="onBeforeUpload"
-                    :http-request="Upload">
-                    <i class="el-icon-upload"></i>
-                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                    <template #tip>
-                        <div class="el-upload__tip">
-                            上传文件不超过 10mb
-                        </div>
-                    </template>
-                </el-upload>
-                <el-form-item label="备注" style="width: 300px;margin: 20px 0 0 0;">
-                    <el-input v-model="upLoadData.remarks">
+                <el-form-item label="发行公司" style="width: 500px;margin: 20px 0 0 0;">
+                    <el-input v-model="addData.remarks">
 
                     </el-input>
                 </el-form-item>
+                <el-form-item label="软件描述" style="width: 500px;margin: 20px 0 0 0;">
+                    <el-input type="textarea" v-model="addData.description">
 
+                    </el-input>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
@@ -97,7 +90,6 @@ export default {
     name: 'filmTable',
     data() {
         return {
-            typeList: [],
             query: {
                 current: 1,
                 size: 5,
@@ -108,9 +100,11 @@ export default {
             pageTotal: 1,
             loading: false,
             form:{},
-            upLoadData:{
-                addType:'',
-                remarks:''
+            addData:{
+                id:'',
+                name:'',
+                company:'',
+                description:''
             },
             editVisible: false,
             fileList:[],
@@ -120,7 +114,6 @@ export default {
     },
     created() {
         this.getData();
-        this.getType();
     },
     methods: {
         // 获取 easy-mock 的模拟数据
@@ -131,21 +124,11 @@ export default {
                 size: this.query.size,
                 delFlag: this.query.delFlag
             }
-            this.postRequest('/chick/softwareContent/list', data).then(res => {
+            this.postRequest('/chick/software/list', data).then(res => {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
                 // console.log(res.data.records);
                 console.log(res);
-            })
-        },
-        getType() {
-            const data = {
-                zdName: '文件类型'
-            }
-            this.getRequest('/chick/sysZd/getZdxByZdName', data).then(res => {
-                // console.log(res.data.records);
-                this.typeList = res.data;
-                // console.log(res.data);
             })
         },
         changeType(value) {
@@ -164,8 +147,9 @@ export default {
             this.getData();
         },
         add() {
-            this.upLoadData.addType=''
-            this.fileList=[]
+            this.addData.name = '',
+            this.addData.company = '',
+            this.addData.description = '',
             this.editVisible=true
         },
         onBeforeUpload(file){
@@ -185,22 +169,13 @@ export default {
         },
         // 保存编辑
         saveAdd() {
-            if (this.upLoadData.addType===''){
-                Message.error('请选择文件类型')
+            if (this.addData.name===''){
+                Message.error('请填写文件名')
                 return
             }
-            console.log(this.param)
-            const formData = new FormData()
-            formData.append('file',this.param.file);
-            formData.append('remarks',this.param.data.remarks);
-            axios.post("/chick/File/managerUploadFile", formData, {headers: {'Content-Type': 'multipart/form-data'}}).then(res=>{
-                if (res.code === 0){
-                    this.editVisible=false;
-                    this.getData();
-                }
+            this.postRequest('/chick/software/editSoftware', this.addData).then(res=>{
+                console.log(res);
             })
-
-            // console.log(this.file)
         },
         // 删除操作
         handleDelete(index, row) {
@@ -211,10 +186,10 @@ export default {
             })
                 .then(() => {
                     const data = {
-                        fileId: row.id,
+                        softwareId: row.id,
                         delFlag: row.delFlag
                     }
-                    this.postRequest("/chick/File/deleteOrRenew", data).then(res=>{
+                    this.postRequest("/chick/software/deleteOrRenew", data).then(res=>{
                         this.getData()
                     });
                 })

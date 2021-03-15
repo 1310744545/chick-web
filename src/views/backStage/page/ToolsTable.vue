@@ -3,7 +3,7 @@
         <div class="container">
             <div class="handle-box">
                 <el-input v-model="query.keyword" placeholder="请输入工具名" class="handle-input mr10"></el-input>
-                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle"
+                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:top"
                            @change="getData('selectchange')">
                     <el-option :value="0" label="正常工具"></el-option>
                     <el-option :value='1' label="已删除工具"></el-option>
@@ -164,10 +164,10 @@ export default {
             })
                 .then(() => {
                     const data = {
-                        id: row.id,
+                        toolId: row.id,
                         delFlag: row.delFlag
                     }
-                    this.postRequest("/announcement/manager/deleteOrRenew", data).then(this.getData());
+                    this.postRequest("/chick/tools/deleteOrRenew", data).then(this.getData());
                 })
                 .catch(() => {
                 });

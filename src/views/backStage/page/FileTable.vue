@@ -11,18 +11,18 @@
                 </el-button>
                 <el-input v-model="query.keyword" placeholder="文件名" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-                <el-select v-model="query.delFlag" class="mr10" style="vertical-align:middle;margin-left: 10px"
+                <el-select v-model="query.delFlag" class="mr10" style="margin-left: 10px"
                            @change="changeDel">
                     <el-option :value="0" label="正常文件"></el-option>
                     <el-option :value='1' label="已删除文件"></el-option>
                 </el-select>
-                <el-select v-model="query.type" class="mr10" style="vertical-align:middle;"
+                <el-select v-model="query.type" class="mr10"
                            @change="changeType">
                     <el-option key="all" value="" label="全部"></el-option>
                     <el-option :key="item.id" :value="item.id" v-for="(item, index) in typeList"
                                :label="item.name"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-plus" @click="add">添加文件</el-button>
+                <el-button type="primary" icon="el-icon-plus" @click="add" >添加文件</el-button>
             </div>
             <el-table
                 :data="tableData"

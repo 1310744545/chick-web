@@ -167,7 +167,7 @@ export default {
                 size: 4,
                 delFlag: this.query.delFlag
             }
-            this.getRequest("/get/list", data).then(res => {
+            this.getRequest("/get/toolList", data).then(res => {
                 this.toolsList = res.data.records;
                 this.toolsLoading = false;
                 console.log(res);

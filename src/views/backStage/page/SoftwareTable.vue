@@ -24,13 +24,21 @@
                 <el-table-column prop="company" label="开发商"></el-table-column>
                 <el-table-column prop="description" label="描述"></el-table-column>
                 <el-table-column prop="createDate" label="上传时间"></el-table-column>
-                <el-table-column label="操作" width="180" align="center">
+                <el-table-column label="操作" width="280" align="center">
                     <template slot-scope="scope">
                         <el-button
                             type="text"
                             icon="el-icon-edit"
                             class="success"
-                            @click="handleDelete(scope.$index, scope.row)"
+                            @click="getContent(scope.$index, scope.row)"
+                            v-if="scope.row.delFlag === '0'"
+                        >管理软件内容
+                        </el-button>
+                        <el-button
+                            type="text"
+                            icon="el-icon-edit"
+                            class="success"
+                            @click="handleEdit(scope.$index, scope.row)"
                             v-if="scope.row.delFlag === '0'"
                         >编辑
                         </el-button>
@@ -56,7 +64,7 @@
             </div>
         </div>
 
-        <!-- 添加文件 -->
+        <!-- 添加或编辑软件标题 -->
         <el-dialog title="添加文件" :visible.sync="editVisible" width="580px">
             <el-form ref="form" :model="form" label-width="80px" >
                 <el-input v-if="false" v-model="addData.id"></el-input>
@@ -65,7 +73,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="发行公司" style="width: 500px;margin: 20px 0 0 0;">
-                    <el-input v-model="addData.remarks">
+                    <el-input v-model="addData.company">
 
                     </el-input>
                 </el-form-item>
@@ -78,6 +86,69 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 获取软件内容table -->
+        <el-dialog title="软件内容" :visible.sync="contentVisible">
+            <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加软件</el-button>
+            <el-table
+                :data="contentTable"
+                border
+                class="table"
+                ref="multipleTable"
+                header-cell-class-name="table-header"
+            >
+                <el-table-column prop="id" label="ID" width="55" align="center" v-if="false"></el-table-column>
+                <el-table-column prop="name" label="文件名"></el-table-column>
+                <el-table-column prop="company" label="开发商"></el-table-column>
+                <el-table-column prop="description" label="描述"></el-table-column>
+                <el-table-column prop="createDate" label="上传时间"></el-table-column>
+                <el-table-column label="操作" width="280" align="center">
+                    <template slot-scope="scope">
+                        <el-button
+                            type="text"
+                            icon="el-icon-delete"
+                            class="red"
+                            @click="handleDelete(scope.$index, scope.row)"
+                        >删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+
+        <!-- 添加文件 -->
+        <el-dialog title="添加文件" :visible.sync="addVisible" width="400px">
+            <el-form ref="form" :model="form" label-width="80px" >
+                <el-input v-if="false" v-model="addContent.id"></el-input>
+                <el-input v-if="false" v-model="addContent.softwareId"></el-input>
+                <el-upload
+                    class="upload-demo"
+                    drag
+                    :data="addContent"
+                    action=""
+                    :limit= 1
+                    :file-list="fileList"
+                    :before-upload="onBeforeUpload"
+                    :http-request="Upload">
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </el-upload>
+                <el-form-item label="版本号" style="width: 300px;margin: 20px 0 0 0;">
+                    <el-input v-model="addContent.versions"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" style="width: 300px;margin: 20px 0 0 0;">
+                    <el-select v-model="addContent.system">
+                        <el-option value="windows" label="windows"></el-option>
+                        <el-option value="linux" label="linux"></el-option>
+                        <el-option value="mac" label="mac"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveContent">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -106,7 +177,16 @@ export default {
                 company:'',
                 description:''
             },
+            addContent:{
+                id:'',
+                softwareId:'',
+                versions:'',
+                system:''
+            },
+            contentTable:[],
             editVisible: false,
+            addVisible:false,
+            contentVisible:false,
             fileList:[],
             param:'',
             delList: [],
@@ -153,17 +233,17 @@ export default {
             this.editVisible=true
         },
         onBeforeUpload(file){
-            if (file.size > 10485760){
-                Message.error('上传文件请小于10mb')
-                this.fileList=[]
-            }
+            // if (file.size > 10485760){
+            //     Message.error('上传文件请小于10mb')
+            //     this.fileList=[]
+            // }
             // console.log(file)
         },
         Upload(param){
-            if (param.file.size > 10485760){
-                Message.error('上传文件请小于10mb')
-                this.fileList=[]
-            }
+            // if (param.file.size > 10485760){
+            //     Message.error('上传文件请小于10mb')
+            //     this.fileList=[]
+            // }
             this.param=param
             // console.log(param)
         },
@@ -174,7 +254,8 @@ export default {
                 return
             }
             this.postRequest('/chick/software/editSoftware', this.addData).then(res=>{
-                console.log(res);
+                this.getData();
+                this.editVisible=false;
             })
         },
         // 删除操作
@@ -216,15 +297,32 @@ export default {
         },
         // 编辑操作
         handleEdit(index, row) {
-            this.idx = index;
-            this.form = row;
+            this.addData.id = row.id;
+            this.addData.name = row.name;
+            this.addData.company = row.company;
+            this.addData.description = row.description;
             this.editVisible = true;
         },
-        // 保存编辑
-        saveEdit() {
-            this.editVisible = false;
-            this.$message.success(`修改第 ${this.idx + 1} 行成功`);
-            this.$set(this.tableData, this.idx, this.form);
+        getContent(index, row){
+            this.contentVisible = true;
+            this.addContent.softwareId = row.id;
+        },
+        handleAdd(index, row){
+            this.fileList=[]
+            this.addVisible=true
+        },
+        saveContent(){
+            const formData = new FormData()
+            formData.append('file',this.param.file);
+            formData.append('softwareId',this.addContent.softwareId);
+            formData.append('versions',this.addContent.versions);
+            formData.append('system',this.addContent.system);
+            axios.post("/chick/softwareContent/uploadFile", formData, {headers: {'Content-Type': 'multipart/form-data'}}).then(res=>{
+                if (res.code === 0){
+                    this.addVisible=false;
+                    // this.getData();
+                }
+            })
         },
         // 分页导航
         handlePageChange(val) {

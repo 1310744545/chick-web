@@ -226,7 +226,7 @@ export default {
                 Message.error('请选择文件类型')
                 return
             }
-            console.log(this.param)
+            // console.log(this.param)
             const formData = new FormData()
             formData.append('file',this.param.file);
             formData.append('type',this.param.data.addType);

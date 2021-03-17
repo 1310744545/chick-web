@@ -28,7 +28,7 @@
                     <template slot-scope="scope">
                         <el-button
                             type="text"
-                            icon="el-icon-edit"
+                            icon="el-icon-s-operation"
                             class="success"
                             @click="getContent(scope.$index, scope.row)"
                             v-if="scope.row.delFlag === '0'"
@@ -90,7 +90,7 @@
         </el-dialog>
 
         <!-- 获取软件内容table -->
-        <el-dialog title="软件内容" :visible.sync="contentVisible">
+        <el-dialog title="软件内容" :visible.sync="contentVisible" width="70%">
             <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加软件</el-button>
             <el-table
                 :data="contentTable"
@@ -99,30 +99,39 @@
                 ref="multipleTable"
                 header-cell-class-name="table-header"
             >
-                <el-table-column prop="id" label="ID" width="55" align="center" v-if="false"></el-table-column>
-                <el-table-column prop="name" label="文件名"></el-table-column>
-                <el-table-column prop="company" label="开发商"></el-table-column>
-                <el-table-column prop="description" label="描述"></el-table-column>
+                <el-table-column prop="fileName" label="文件名"></el-table-column>
+                <el-table-column prop="system" label="描述"></el-table-column>
+                <el-table-column prop="versions" label="版本"></el-table-column>
                 <el-table-column prop="createDate" label="上传时间"></el-table-column>
-                <el-table-column label="操作" width="280" align="center">
+                <el-table-column label="操作" width="100" align="center">
                     <template slot-scope="scope">
                         <el-button
                             type="text"
                             icon="el-icon-delete"
                             class="red"
-                            @click="handleDelete(scope.$index, scope.row)"
+                            @click="contentDelete(scope.$index, scope.row)"
                         >删除
                         </el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="pagination">
+                <el-pagination
+                    background
+                    layout="total, prev, pager, next"
+                    :current-page="queryContent.current"
+                    :page-size="queryContent.size"
+                    :total="pageTotal2"
+                    @current-change="handlePageChange2"
+                ></el-pagination>
+            </div>
         </el-dialog>
 
         <!-- 添加文件 -->
         <el-dialog title="添加文件" :visible.sync="addVisible" width="400px">
             <el-form ref="form" :model="form" label-width="80px" >
-                <el-input v-if="false" v-model="addContent.id"></el-input>
-                <el-input v-if="false" v-model="addContent.softwareId"></el-input>
+<!--                <el-input v-if="false" v-model="addContent.id"></el-input>-->
+<!--                <el-input v-if="false" v-model="addContent.softwareId"></el-input>-->
                 <el-upload
                     class="upload-demo"
                     drag
@@ -167,8 +176,13 @@ export default {
                 keyword: '',
                 delFlag: 0
             },
+            queryContent: {
+                current: 1,
+                size: 5,
+            },
             tableData: [],
             pageTotal: 1,
+            pageTotal2: 1,
             loading: false,
             form:{},
             addData:{
@@ -208,9 +222,10 @@ export default {
                 this.tableData = res.data.records;
                 this.pageTotal = res.data.total;
                 // console.log(res.data.records);
-                console.log(res);
+                // console.log(res);
             })
         },
+
         changeType(value) {
             // console.log(value);
             this.query.type = value;
@@ -277,6 +292,23 @@ export default {
                 .catch(() => {
                 });
         },
+        contentDelete(index, row){
+            this.$confirm('确定要删除吗？', '提示', {
+                type: 'warning'
+            })
+                .then(() => {
+                    const data = {
+                        softwareContentId: row.id,
+                        fileId:row.fileId,
+                        url: row.url
+                    }
+                    this.postRequest("/chick/softwareContent/deleteAll", data).then(res=>{
+                        this.getContent();
+                    });
+                })
+                .catch(() => {
+                });
+        },
         // 多选操作
         handleSelectionChange(val) {
             this.multipleSelection = val;
@@ -305,7 +337,20 @@ export default {
         },
         getContent(index, row){
             this.contentVisible = true;
-            this.addContent.softwareId = row.id;
+            // console.log(row);
+            if (this.addContent.softwareId==''){
+                this.addContent.softwareId = row.id
+            }
+            const data = {
+                softwareId : this.addContent.softwareId,
+                current: this.queryContent.current,
+                size : this.queryContent.size
+            }
+            this.postRequest("/chick/softwareContent/list", data).then(res=>{
+                this.contentTable = res.data.records;
+                this.pageTotal2 = res.data.total;
+                // console.log(res.data.records)
+            })
         },
         handleAdd(index, row){
             this.fileList=[]
@@ -320,7 +365,7 @@ export default {
             axios.post("/chick/softwareContent/uploadFile", formData, {headers: {'Content-Type': 'multipart/form-data'}}).then(res=>{
                 if (res.code === 0){
                     this.addVisible=false;
-                    // this.getData();
+                    this.getContent();
                 }
             })
         },
@@ -328,6 +373,10 @@ export default {
         handlePageChange(val) {
             this.$set(this.query, 'current', val);
             this.getData();
+        },
+        handlePageChange2(val) {
+            this.$set(this.queryContent, 'current', val);
+            this.getContent();
         }
     }
 };

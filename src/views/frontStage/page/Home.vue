@@ -62,13 +62,17 @@
                     </el-card>
                 </div>
                 <div class="level2-2">
-                    <el-card class="box-card" shadow="hover">
+                    <el-card class="box-card" shadow="hover" v-loading="softwareLoading">
                         <div slot="header" class="clearfix">
                             <span>软件下载</span>
                             <el-button style="float: right; padding: 3px 0" type="text">查看详情</el-button>
                         </div>
-                        <div v-for="(o,index) in 4" :key="index" class="text item">
-                            {{ '列表内容 ' + o }}
+                        <div v-for="(o,index) in softwareList" :key="index" class="text item">
+                            {{ o.name }}
+                            <span
+                                style="float: right;display: inline-block;white-space: nowrap;width: 76px;overflow: hidden;">{{
+                                    o.createDate
+                                }}撑开</span>
                         </div>
                     </el-card>
                 </div>
@@ -140,8 +144,10 @@ export default {
             url3: 'http://chickweb.oss-cn-beijing.aliyuncs.com/files/%E5%A8%B1%E4%B9%90.png',
             announcement: [],
             toolsList:[],
+            softwareList:[],
             announcementLoading: false,
-            toolsLoading:false
+            toolsLoading:false,
+            softwareLoading:false
         }
     },
     methods: {
@@ -173,6 +179,20 @@ export default {
                 console.log(res);
             })
         },
+        getSoftware(){
+            this.softwareLoading = true;
+            const data = {
+                keyword: this.query.keyword,
+                current: this.query.current,
+                size: 4,
+                delFlag: this.query.delFlag
+            }
+            this.getRequest("/get/softwareList", data).then(res => {
+                this.softwareList = res.data.records;
+                this.softwareLoading = false;
+                console.log(res);
+            })
+        },
         addRouter(path) {
             this.$router.push(path);
         }
@@ -180,6 +200,7 @@ export default {
     created() {
         this.getAnnouncement();
         this.getTools();
+        this.getSoftware();
     }
 }
 </script>

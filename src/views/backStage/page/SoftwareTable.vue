@@ -90,8 +90,8 @@
         </el-dialog>
 
         <!-- 获取软件内容table -->
-        <el-dialog title="软件内容" :visible.sync="contentVisible" width="70%">
-            <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加软件</el-button>
+        <el-dialog title="软件内容" :visible.sync="contentVisible" width="80%">
+            <el-button type="primary" icon="el-icon-plus" @click="handleAdd" style="margin: -10px    auto 20px auto;display: block">添加软件</el-button>
             <el-table
                 :data="contentTable"
                 border
@@ -147,7 +147,7 @@
                 <el-form-item label="版本号" style="width: 300px;margin: 20px 0 0 0;">
                     <el-input v-model="addContent.versions"></el-input>
                 </el-form-item>
-                <el-form-item label="备注" style="width: 300px;margin: 20px 0 0 0;">
+                <el-form-item label="系统" style="width: 300px;margin: 20px 0 0 0;">
                     <el-select v-model="addContent.system">
                         <el-option value="windows" label="windows"></el-option>
                         <el-option value="linux" label="linux"></el-option>
@@ -337,8 +337,8 @@ export default {
         },
         getContent(index, row){
             this.contentVisible = true;
-            // console.log(row);
-            if (this.addContent.softwareId==''){
+            console.log(row);
+            if (row!=undefined){
                 this.addContent.softwareId = row.id
             }
             const data = {
@@ -354,6 +354,8 @@ export default {
         },
         handleAdd(index, row){
             this.fileList=[]
+            this.addContent.versions=''
+            this.addContent.system=''
             this.addVisible=true
         },
         saveContent(){

@@ -29,7 +29,7 @@
                             <span v-if="a.type==='1'" style="color: #222222;">[系统公告]</span>
                             <span v-if="a.type==='2'" style="color: blue;">[内容更新]</span>
                             <span v-if="a.type==='3'" style="color: green;">[站长公告]</span>
-                            <router-link :to="{path:'announcement', query: { id: a.id }}" class="announcementContent">
+                            <router-link :to="{path:'/announcement', query: { id: a.id }}" class="announcementContent">
                                 {{ a.title }}
                             </router-link>
                             <span
@@ -65,10 +65,10 @@
                     <el-card class="box-card" shadow="hover" v-loading="softwareLoading">
                         <div slot="header" class="clearfix">
                             <span>软件下载</span>
-                            <el-button style="float: right; padding: 3px 0" type="text">查看详情</el-button>
+                            <el-button style="float: right; padding: 3px 0" type="text" @click="addRouter('/software')">查看详情</el-button>
                         </div>
                         <div v-for="(o,index) in softwareList" :key="index" class="text item">
-                            {{ o.name }}
+                            <router-link :to="{path: '/softwareDetail', query:{softwareId: o.id}}" style="color: #20a0ff">{{ o.name }}</router-link>
                             <span
                                 style="float: right;display: inline-block;white-space: nowrap;width: 76px;overflow: hidden;">{{
                                     o.createDate
@@ -176,7 +176,7 @@ export default {
             this.getRequest("/get/toolList", data).then(res => {
                 this.toolsList = res.data.records;
                 this.toolsLoading = false;
-                console.log(res);
+                // console.log(res);
             })
         },
         getSoftware(){
@@ -190,7 +190,7 @@ export default {
             this.getRequest("/get/softwareList", data).then(res => {
                 this.softwareList = res.data.records;
                 this.softwareLoading = false;
-                console.log(res);
+                // console.log(res);
             })
         },
         addRouter(path) {
@@ -219,7 +219,7 @@ export default {
 
 .el-carousel__item h3 {
     color: #475669;
-    font-size: 14px;
+    font-size: 16px;
     opacity: 0.75;
     line-height: 150px;
     margin: 0;

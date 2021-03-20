@@ -1,5 +1,5 @@
 <template>
-    <div class="toolsTitle">
+    <div class="toolsTitle" v-loading="loading" style="height: auto;min-height: 600px">
         <el-row :gutter="40" style="width: 90%;margin: 0 auto">
             <el-col :span="6" v-for="(item,index) in toolList" v-bind:key="index" style="text-align:center;margin-bottom: 30px">
                 <router-link :to="item.path">
@@ -32,7 +32,7 @@ export default {
                 keyword: '',
                 delFlag: 0
             },
-            loading: false,
+            loading: true,
             toolList: [],
             pageTotal: 1
         }
@@ -50,9 +50,8 @@ export default {
                 this.toolList = res.data.records;
                 this.pageTotal = res.data.total;
                 sessionStorage.setItem('toolCurrent',this.query.current);
-                // console.log(this.toolList);
+                this.loading = false;
             })
-            this.loading = false;
         },
         handlePageChange(val) {
             this.$set(this.query, 'current', val);

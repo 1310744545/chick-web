@@ -2,7 +2,7 @@
     <el-container class="app">
         <el-header class="header">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item style="margin-left: 20px"><a href="/">
+                <el-menu-item style="margin-left: 20px" index="/goHome"><a href="/">
                     <el-image :src="homeLogo" style="height: 55px;width: 55px"></el-image>
                 </a></el-menu-item>
                 <el-menu-item index="/">首页</el-menu-item>
@@ -11,7 +11,7 @@
                 <el-menu-item index="/writing">帖子</el-menu-item>
                 <el-menu-item index="/film">影视</el-menu-item>
                 <el-menu-item index="/intro">简介</el-menu-item>
-                <el-menu-item>
+                <el-menu-item index="/search">
                     <el-input
                         size="medium"
                         placeholder="当页内容搜索"
@@ -23,7 +23,7 @@
                 <el-menu-item style="float: right;margin-right: 50px" :hidden="loginFlag">
                     <el-button type="primary" @click="login">登录</el-button>
                 </el-menu-item>
-                <el-menu-item class="logout" @click="logout" style="float: right;margin: 0 30px 0 0"
+                <el-menu-item index="/exit" class="logout" @click="logout" style="float: right;margin: 0 30px 0 0"
                               :hidden="!loginFlag">
                     退出<i class="el-icon-switch-button"></i>
                 </el-menu-item>

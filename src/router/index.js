@@ -29,7 +29,12 @@ const routes = [
             {
                 path: '/',
                 component: () => import('../views/frontStage/page/Home'),
-                meta: {title: '首页'}
+                meta: {title: '首页'},
+            },
+            {
+                path: '/announcement',
+                component: () => import('../views/frontStage/page/announcement/Announcement'),
+                meta: {title: '公告'},
             },
             {
                 path: '/tools',
@@ -95,8 +100,19 @@ const routes = [
             },
             {
                 path: '/software',
-                component: () => import('../views/frontStage/page/Software'),
-                meta: {title: '软件'}
+                component: () => import('../views/frontStage/page/software/SoftwateIndex'),
+                meta: {title: '软件'},
+                children: [
+                    {
+                        path: '/',
+                        component: () => import(/* webpackChunkName: "dashboard" */ '../views/frontStage/page/software/Software'),
+                    },
+                    {
+                        path: '/softwareDetail',
+                        component: () => import('../views/frontStage/page/software/SoftwareDetail'),
+                        meta: {title: '软件详情'}
+                    },
+                ]
             },
             {
                 path: '/writing',

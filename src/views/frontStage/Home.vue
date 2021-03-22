@@ -46,18 +46,18 @@
                 <!--                    </template>-->
                 <!--                </el-dropdown>-->
 
-                <el-submenu index="myself" style="float: right" :hidden="!loginFlag">
+                <el-submenu index="1" style="float: right" :hidden="!loginFlag">
                     <template slot="title">
                         <el-col :span="16">
                             <el-image style="height: 40px;width: 40px" :src="user.headPortraitUrl"></el-image>
                         </el-col>
                     </template>
-                    <el-menu-item index="information">个人信息</el-menu-item>
-                    <el-menu-item index="write">写帖子</el-menu-item>
-                    <el-menu-item index="manageWriting">帖子管理</el-menu-item>
-                    <el-menu-item index="setting">设置(未开放)</el-menu-item>
-                    <el-menu-item index="enshrine">收藏(未开放)</el-menu-item>
-                    <el-menu-item index="history">历史(未开放)</el-menu-item>
+                    <el-menu-item index="/information">个人信息</el-menu-item>
+                    <el-menu-item index="/write">写帖子</el-menu-item>
+                    <el-menu-item index="/manageWriting">帖子管理</el-menu-item>
+                    <el-menu-item index="/setting">设置(未开放)</el-menu-item>
+                    <el-menu-item index="/enshrine">收藏(未开放)</el-menu-item>
+                    <el-menu-item index="/history">历史(未开放)</el-menu-item>
                 </el-submenu>
 
                 <el-dropdown style="float: right;padding: 20px 25px 0 0" :hidden="!loginFlag">
@@ -181,8 +181,8 @@ export default {
     },
     watch:{
         '$route' (to, from){
-            console.log(to)
-            console.log(from)
+            // console.log(to)
+            // console.log(from)
             this.activeIndex = to.matched[1].path
         }
     }
@@ -242,5 +242,9 @@ export default {
 
 ::v-deep .logout {
     padding: 0 20px 0 0;
+}
+
+::v-deep [data-v-240baccf] .el-submenu__title{
+    padding: 0 10px;
 }
 </style>

@@ -37,6 +37,21 @@ const routes = [
                 meta: {title: '公告'},
             },
             {
+                path: '/information',
+                component: () => import('../views/user/information'),
+                meta: {title: '个人信息'},
+            },
+            {
+                path: '/write',
+                component: () => import('../views/user/write'),
+                meta: {title: '写帖子'},
+            },
+            {
+                path: '/writeManager',
+                component: () => import('../views/user/writeManager'),
+                meta: {title: '帖子管理'},
+            },
+            {
                 path: '/tools',
                 component: () => import('../views/frontStage/page/Tools'),
                 meta: {title: '在线工具'},

@@ -75,7 +75,7 @@
                 <el-input class="handle-input " v-model="tool.name"></el-input><br><br>
                 <span style="color: red;margin: 0 10px 0 0">工具路径(以/开头):</span>
                 <el-input class="handle-input" v-model="tool.path"></el-input><br><br>
-                <span style="color: red;margin: 0 38px 0 0">工具图片类别:</span>
+                <span style="color: red;margin: 0 65px 0 0">工具图片:</span>
                 <el-select v-model="tool.fileId">
                     <el-option v-for="item in fileList" :value="item.id" >
                         <el-image :src="item.url" style="width: 30px;height: 30px;"></el-image>

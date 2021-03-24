@@ -54,7 +54,7 @@
                     </template>
                     <el-menu-item index="/information">个人信息</el-menu-item>
                     <el-menu-item index="/write">写帖子</el-menu-item>
-                    <el-menu-item index="/manageWriting">帖子管理</el-menu-item>
+                    <el-menu-item index="/writeManager">帖子管理</el-menu-item>
                     <el-menu-item index="/setting">设置(未开放)</el-menu-item>
                     <el-menu-item index="/enshrine">收藏(未开放)</el-menu-item>
                     <el-menu-item index="/history">历史(未开放)</el-menu-item>
@@ -202,6 +202,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     text-align: center;
+    font-size: 16px;
 }
 
 #nav {

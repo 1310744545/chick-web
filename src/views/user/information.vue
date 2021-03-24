@@ -36,7 +36,7 @@
                     </el-date-picker><br>
                 电话: <el-input v-model="user.phone" style="width: 300px;margin: 0 0 10px 0"></el-input><br>
                 邮箱: <el-input v-model="user.email" style="width: 300px;margin: 0 0 10px 0"></el-input><br>
-                <el-button type="primary" round style="margin: 30px 0 0 0;display:block;">保存信息</el-button>
+                <el-button type="primary" round style="margin: 30px 0 0 0;display:block;" @click="updateUser">保存信息</el-button>
             </div>
         </el-card>
     </div>
@@ -51,6 +51,7 @@ export default {
         return {
             loading: false,
             user: {
+                userid:'',
                 username: '',
                 sex: '',
                 phone: '',
@@ -70,6 +71,7 @@ export default {
             this.loading = true
             if (window.localStorage.getItem('token') !== null) {
                 this.postRequest('/user/getUserByJwt').then(res => {
+                    console.log(res);
                     this.user = res.data;
                     this.loading = false
                     if (this.user.headPortraitUrl === null) {
@@ -86,13 +88,19 @@ export default {
             // console.log('onBeforeUpload')
         },
         Upload(param){
-            console.log(param)
+            // console.log(param)
             const formData = new FormData()
             formData.append('file',param.file);
             axios.post("/user/uploadHeadPortrait", formData, {headers: {'Content-Type': 'multipart/form-data'}}).then(res=>{
                 location.reload();
             })
         },
+        updateUser(){
+            this.postRequest('/user/updateUser', this.user).then(res =>{
+                console.log(res)
+                this.getUser()
+            })
+        }
     }
 }
 </script>

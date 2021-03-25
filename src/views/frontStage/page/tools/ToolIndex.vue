@@ -11,7 +11,7 @@
         <br>
         <div class="pagination">
             <el-pagination
-                layout="total, prev, pager, next"
+                layout="prev, pager, next, jumper"
                 :current-page="query.current"
                 :page-size="query.size"
                 :total="pageTotal"

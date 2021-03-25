@@ -51,7 +51,7 @@
             <div class="pagination">
                 <el-pagination
                     background
-                    layout="total, prev, pager, next"
+                    layout="prev, pager, next, jumper"
                     :current-page="query.current"
                     :page-size="query.size"
                     :total="pageTotal"
@@ -93,6 +93,7 @@ export default {
             }
             this.getRequest("/chick/software/softwareAndContentList", data).then(res => {
                 this.softwareList = res.data.records;
+                this.pageTotal = res.data.total;
                 this.loading = false
                 console.log(res);
             })

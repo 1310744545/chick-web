@@ -131,8 +131,20 @@ const routes = [
             },
             {
                 path: '/writing',
-                component: () => import('../views/frontStage/page/writing/Writing'),
-                meta: {title: '帖子'}
+                component: () => import('../views/frontStage/page/writing/WritingIndex'),
+                meta: {title: '帖子'},
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('../views/frontStage/page/writing/Writing'),
+                        meta: {title: '帖子'}
+                    },
+                    {
+                        path: '/writingDetail',
+                        component: () => import('../views/frontStage/page/writing/WritingDetail'),
+                        meta: {title: '帖子'}
+                    },
+                ]
             },
             {
                 path: '/film',

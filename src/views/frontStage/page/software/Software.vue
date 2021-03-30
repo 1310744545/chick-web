@@ -42,7 +42,7 @@
                         </a>
                     </span>
                     <span style="font-size: 16px;width: 200px;display: inline-block;text-align: right">
-                        <router-link :to="{path:'/softwareDetail', query:{softwareId:item.id}}">
+                        <router-link :to="{path:'/softwareDetail', query:{softwareId:item.id}}" style="text-decoration: none;">
                                 所有版本<i class="el-icon-arrow-right"></i>
                         </router-link>
                     </span>

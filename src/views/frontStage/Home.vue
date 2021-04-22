@@ -11,15 +11,15 @@
                 <el-menu-item index="/writing">帖子</el-menu-item>
                 <el-menu-item index="/film">影视</el-menu-item>
                 <el-menu-item index="/intro">简介</el-menu-item>
-                <el-menu-item index="/search">
-                    <el-input
+                <div style="width: 300px;float: left;height: 60px;margin: 0;">
+                    <el-input style="margin: 12px 0 0 10px"
                         size="medium"
                         placeholder="当页内容搜索"
                         prefix-icon="el-icon-search"
                         v-model="input">
                         <el-button slot="append" style="width:70px" type="primary">搜索</el-button>
                     </el-input>
-                </el-menu-item>
+                </div>
                 <el-menu-item style="float: right;margin-right: 50px" :hidden="loginFlag">
                     <el-button type="primary" @click="login">登录</el-button>
                 </el-menu-item>
@@ -181,9 +181,11 @@ export default {
     },
     watch:{
         '$route' (to, from){
-            // console.log(to)
-            // console.log(from)
-            this.activeIndex = to.matched[1].path
+
+            console.log(to)
+            console.log(from)
+            // this.activeIndex = to.matched[1].path
+            this.activeIndex = '/' + to.path.split('/')[1];
         }
     }
 }

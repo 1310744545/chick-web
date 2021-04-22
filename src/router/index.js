@@ -148,12 +148,29 @@ const routes = [
             },
             {
                 path: '/film',
-                component: () => import('../views/frontStage/page/Film'),
-                meta: {title: '影视'}
+                component: () => import('../views/frontStage/page/film/FilmIndex'),
+                meta: {title: '影视'},
+                children: [
+                    {
+                        path: '/',
+                        component: () => import('../views/frontStage/page/film/FileList'),
+                        meta: {title: '帖子'}
+                    },
+                    {
+                        path: '/filmPlayer',
+                        component: () => import('../views/frontStage/page/film/FilmPlayer'),
+                        meta: {title: '帖子'}
+                    },
+                ]
             },
             {
                 path: '/intro',
                 component: () => import('../views/frontStage/page/Intro'),
+                meta: {title: '简介'}
+            },
+            {
+                path: '/film/detail',
+                component: () => import('../views/frontStage/page/film/FilmDetail'),
                 meta: {title: '简介'}
             }
         ]

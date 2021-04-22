@@ -95,7 +95,6 @@ export default {
                 this.softwareList = res.data.records;
                 this.pageTotal = res.data.total;
                 this.loading = false
-                console.log(res);
             })
         },
         // 分页导航

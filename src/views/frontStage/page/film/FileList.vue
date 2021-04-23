@@ -3,7 +3,7 @@
         <div v-for="(item, index) in filmList" style="width: 15%;display: inline-block;height: 270px">
             <router-link :to="{path:'/film/detail', query:{filmId:item.id}}">
                 <img :src="item.coverUrl" style="width: 95%;height: 90%">
-                <span style="font-size: 14px">{{item.name}}</span>
+                <span style="font-size: 14px">{{ item.name }}</span>
             </router-link>
         </div>
 
@@ -33,11 +33,14 @@ export default {
                 delFlag: 0
             },
             pageTotal: 0,
-            loading:false
+            loading: false
         }
     },
     created() {
-      this.getFilm()
+        if (sessionStorage.getItem('filmIndex') != null) {
+            this.query.current = parseInt(sessionStorage.getItem('filmIndex'));
+        }
+        this.getFilm()
     },
     methods: {
         getFilm() {
@@ -51,8 +54,9 @@ export default {
             this.getRequest('/chick/film/list', data).then(res => {
                 this.filmList = res.data.records
                 this.pageTotal = res.data.total;
+                sessionStorage.setItem('filmIndex', this.query.current);
                 this.loading = false
-                console.log(res);
+                // console.log(res);
             })
         },
         // 分页导航

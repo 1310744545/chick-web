@@ -14,7 +14,7 @@
                 <div style="width: 300px;float: left;height: 60px;margin: 0;">
                     <el-input style="margin: 12px 0 0 10px"
                         size="medium"
-                        placeholder="当页内容搜索"
+                        placeholder="当页内容搜索(暂不可用)"
                         prefix-icon="el-icon-search"
                         v-model="input">
                         <el-button slot="append" style="width:70px" type="primary">搜索</el-button>

@@ -1,19 +1,23 @@
 <template>
     <div style="height: auto">
         <div style="width: 85%;margin: 20px auto">
-            <el-radio style="width: 5%" v-model="radio" label="all"> 所有</el-radio>
+            <el-radio style="width: 5%" v-model="radio" label=""> 所有</el-radio>
             <el-radio style="width: 5%" v-model="radio" v-for="(item,index) in typeList" :label="item.id"> {{item.name}}</el-radio>
         </div>
-        <router-view></router-view>
+        <FileList :type="radio"></FileList>
     </div>
 </template>
 
 <script>
+import FileList from './FileList'
 export default {
     name: "FilmIndex",
+    components: {
+        FileList
+    },
     data() {
         return {
-            radio: 'all',
+            radio: '',
             typeList:{}
             // type:this.radio
         }

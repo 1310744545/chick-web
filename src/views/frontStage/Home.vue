@@ -1,5 +1,5 @@
 <template>
-    <el-container class="app">
+    <el-container id="app">
         <el-header class="header">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
                 <el-menu-item style="margin-left: 20px" index="/goHome"><a href="/">
@@ -115,7 +115,6 @@
         </el-footer>
     </el-container>
 </template>
-
 <script>
 export default {
     name: "Home",
@@ -190,14 +189,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 * {
     margin: 0;
     padding: 0;
-
 }
 
-.app {
+#app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

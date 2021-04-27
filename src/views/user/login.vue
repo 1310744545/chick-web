@@ -35,7 +35,7 @@
         name: 'Login',
         data() {
             return {
-                captchaUrl:'/user/captcha?time='+ new Date(),
+                captchaUrl:this.common.baseURL+'/user/captcha?time='+ new Date(),
                 loginForm: {
                     username: '',
                     password: '',
@@ -84,7 +84,7 @@
                 });
             },
             updateCaptcha(){
-                this.captchaUrl = '/user/captcha?time='+ new Date();
+                this.captchaUrl = this.common.baseURL+'/user/captcha?time='+ new Date();
             },
             register(){
                 this.$router.replace('/user/register');

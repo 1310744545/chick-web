@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
 import router from '../router'
+import common from "@/utils/common";
 
 //请求拦截器
 axios.interceptors.request.use(config => {
@@ -53,8 +54,8 @@ axios.interceptors.response.use(success => {
 });
 
 
-//请求
-let base = '';
+
+let base = common.baseURL;
 //传送json格式的post请求
 export const postRequest = (url, params) => {
     return axios({

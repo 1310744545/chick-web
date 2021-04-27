@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header2">
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
             <i v-if="!collapse" class="el-icon-s-fold"></i>
@@ -114,7 +114,7 @@ export default {
 };
 </script>
 <style scoped>
-.header {
+.header2 {
     position: relative;
     box-sizing: border-box;
     width: 100%;

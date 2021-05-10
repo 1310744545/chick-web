@@ -83,6 +83,7 @@ export default {
     },
     watch:{
         type:function (newVal, oldVal){
+            this.query.current = 1;
             sessionStorage.setItem('filmIndex', 1);
             this.getFilm()
         }

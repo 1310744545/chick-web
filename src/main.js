@@ -13,7 +13,7 @@ import store from './store'
 import common from './utils/common'
 
 Vue.prototype.common = common;
-
+// axios.defaults.withCredentials = true;
 import {postRequest} from "./utils/axios";
 import {getRequest} from "./utils/axios";
 import {putRequest} from "./utils/axios";
